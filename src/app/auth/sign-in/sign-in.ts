@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-sign-in',
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSnackBarModule
   ],
   templateUrl: './sign-in.html',
   styleUrl: './sign-in.css',
@@ -16,7 +18,8 @@ export class SignIn {
 
   constructor(
     private authService: AuthService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private snackBar: MatSnackBar
   ) {
     this.signInForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -29,16 +32,24 @@ export class SignIn {
       const { email, password } = this.signInForm.value
       this.authService.sign_in(email, password).subscribe({
         next: (response: any) => {
-          console.log('Sign-in successful:', response);
-          this.authService.save_token(response.token);
+          this.showSnackMsgBar('Sign-in successful!', 'OK');
         },
         error: (error) => {
-          console.error('Sign-in failed:', error);
+          this.showSnackMsgBar('Sign-in failed!', 'Retry');
         }
       });
     }
     else { }
   }
 
+  showSnackMsgBar(msg: string, action: string) {
+    const snackBarRef = this.snackBar.open(msg, action, { duration: 3000 });
+    snackBarRef.afterDismissed().subscribe(() => {
+      console.log(' this is the atttt');
+    });
+    snackBarRef.onAction().subscribe(() => {
+      console.log(' this is the action');
+    });
+  }
 
 }

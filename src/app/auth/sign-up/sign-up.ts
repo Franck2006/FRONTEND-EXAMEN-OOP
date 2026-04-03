@@ -29,7 +29,6 @@ export class SignUp {
       this.authService.sign_up(email, password, phone).subscribe({
         next: (response: any) => {
           console.log('Sign-up successful:', response);
-          this.authService.save_token(response.token);
         },
         error: (error) => {
           console.error('Sign-in failed:', error);
