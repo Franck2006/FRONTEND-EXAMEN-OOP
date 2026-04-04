@@ -32,7 +32,7 @@ export class SignIn {
   }
 
   isLoading: boolean = false;
-  onUsesrSignIn() {
+  onUserSignIn() {
     this.isLoading = true;
     if (this.signInForm.valid) {
       const { email, password } = this.signInForm.value
@@ -42,7 +42,7 @@ export class SignIn {
           this.showSnackMsgBar('Sign-in successful!', 'OK');
         },
         error: (error) => {
-          this.isLoading = false;  
+          this.isLoading = false;
           this.showSnackMsgBar('Sign-in failed!', 'Retry');
         }
       });

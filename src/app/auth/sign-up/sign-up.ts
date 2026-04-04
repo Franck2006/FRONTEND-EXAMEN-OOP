@@ -42,7 +42,8 @@ export class SignUp {
       this.authService.sign_up(email, password, phone).subscribe({
         next: (response: any) => {
           this.showSnackMsgBar('Sign-up successful!', 'OK');
-          this.isLoading = false
+          this.isLoading = false;
+          this.clearForm();
         },
         error: (error) => {
           this.showSnackMsgBar('Sign-up failed!', 'Retry');
@@ -51,6 +52,10 @@ export class SignUp {
       });
     }
     else { }
+  }
+
+  clearForm() {
+    this.signUpForm.reset();
   }
 
   showSnackMsgBar(msg: string, action: string) {
@@ -62,5 +67,4 @@ export class SignUp {
       console.log(' this is the action');
     });
   }
-
 }
