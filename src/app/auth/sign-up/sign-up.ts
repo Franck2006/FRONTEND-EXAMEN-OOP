@@ -1,10 +1,19 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { RouterLink } from '@angular/router';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 
 @Component({
   selector: 'app-sign-up',
-  imports: [],
+  imports: [
+    ReactiveFormsModule,
+    MatSnackBarModule,
+    RouterLink,
+    MatProgressSpinnerModule
+  ],
   templateUrl: './sign-up.html',
   styleUrl: './sign-up.css',
 })
@@ -14,7 +23,8 @@ export class SignUp {
 
   constructor(
     private authService: AuthService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private snackBar: MatSnackBar
   ) {
     this.signUpForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -23,19 +33,34 @@ export class SignUp {
     })
   }
 
+  isLoading: boolean = false;
   onUsesrSignUp() {
+
+    this.isLoading = true;
     if (this.signUpForm.valid) {
       const { email, password, phone } = this.signUpForm.value
       this.authService.sign_up(email, password, phone).subscribe({
         next: (response: any) => {
-          console.log('Sign-up successful:', response);
+          this.showSnackMsgBar('Sign-up successful!', 'OK');
+          this.isLoading = false
         },
         error: (error) => {
-          console.error('Sign-in failed:', error);
+          this.showSnackMsgBar('Sign-up failed!', 'Retry');
+          this.isLoading = false;
         }
       });
     }
     else { }
+  }
+
+  showSnackMsgBar(msg: string, action: string) {
+    const snackBarRef = this.snackBar.open(msg, action, { duration: 3000 });
+    snackBarRef.afterDismissed().subscribe(() => {
+      console.log(' this is the atttt');
+    });
+    snackBarRef.onAction().subscribe(() => {
+      console.log(' this is the action');
+    });
   }
 
 }

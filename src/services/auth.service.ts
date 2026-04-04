@@ -40,11 +40,7 @@ export class AuthService {
         return this.http.post(`${environment.API}/auth/sign-out`, {});
     }
 
-    get_token() {
-        return localStorage.getItem('token');
-    }
-
     log_out() {
-        localStorage.removeItem('token');
+        localStorage.removeItem('access_token');
     }
 }

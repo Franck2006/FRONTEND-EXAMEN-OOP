@@ -2,12 +2,16 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { RouterLink } from '@angular/router';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-sign-in',
   imports: [
     ReactiveFormsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    RouterLink,
+    MatProgressSpinnerModule
   ],
   templateUrl: './sign-in.html',
   styleUrl: './sign-in.css',
@@ -27,14 +31,18 @@ export class SignIn {
     })
   }
 
+  isLoading: boolean = false;
   onUsesrSignIn() {
+    this.isLoading = true;
     if (this.signInForm.valid) {
       const { email, password } = this.signInForm.value
       this.authService.sign_in(email, password).subscribe({
         next: (response: any) => {
+          this.isLoading = false;
           this.showSnackMsgBar('Sign-in successful!', 'OK');
         },
         error: (error) => {
+          this.isLoading = false;  
           this.showSnackMsgBar('Sign-in failed!', 'Retry');
         }
       });

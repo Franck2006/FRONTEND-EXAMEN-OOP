@@ -1,1 +1,86 @@
-<p>sign-up works!</p>
+<div class="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-100 flex items-center justify-center p-4">
+  <div
+    class="max-w-md w-full bg-white/80 backdrop-blur-lg rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] overflow-hidden p-8 space-y-8 border border-white">
+    <div class="text-center">
+      <h2 class="text-3xl font-extrabold text-slate-800 tracking-tight">Create Account</h2>
+      <p class="mt-2 text-sm text-slate-500">Join us and start your journey today</p>
+    </div>
+
+    <form [formGroup]="signUpForm" (ngSubmit)="onUsesrSignUp()" class="space-y-5">
+      <div>
+        <label for="email" class="block text-sm font-semibold text-slate-700">Email Address <span
+            class="text-red-500">*</span></label>
+        <div class="mt-1.5 relative">
+          <input type="email" id="email" formControlName="email"
+            class="block w-full px-4 py-3.5 bg-white/50 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-all duration-200 ease-in-out placeholder-slate-400"
+            [class.!border-red-500]="signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched"
+            [class.focus:!ring-red-500]="signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched"
+            placeholder="you@example.com">
+        </div>
+        @if (signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched) {
+        <div class="text-sm text-red-500 mt-2 font-medium flex flex-col">
+          @if (signUpForm.get('email')?.errors?.['required']) {
+          <span>* Email is required.</span>
+          }
+          @if (signUpForm.get('email')?.errors?.['email']) {
+          <span>* Please enter a valid email.</span>
+          }
+        </div>
+        }
+      </div>
+
+      <div>
+        <label for="password" class="block text-sm font-semibold text-slate-700">Password <span
+            class="text-red-500">*</span></label>
+        <div class="mt-1.5 relative">
+          <input type="password" id="password" formControlName="password"
+            class="block w-full px-4 py-3.5 bg-white/50 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-all duration-200 ease-in-out placeholder-slate-400"
+            [class.!border-red-500]="signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched"
+            [class.focus:!ring-red-500]="signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched"
+            placeholder="••••••••">
+        </div>
+        @if (signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched) {
+        <div class="text-sm text-red-500 mt-2 font-medium flex flex-col">
+          @if (signUpForm.get('password')?.errors?.['required']) {
+          <span>* Password is required.</span>
+          }
+          @if (signUpForm.get('password')?.errors?.['minlength']) {
+          <span>* Password must be at least 6 characters.</span>
+          }
+        </div>
+        }
+      </div>
+
+      <div>
+        <label for="phone" class="block text-sm font-semibold text-slate-700">Phone Number (Optional)</label>
+        <div class="mt-1.5 relative">
+          <input type="tel" id="phone" formControlName="phone"
+            class="block w-full px-4 py-3.5 bg-white/50 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-all duration-200 ease-in-out placeholder-slate-400"
+            placeholder="+1 (555) 000-0000">
+        </div>
+      </div>
+
+      <div class="pt-4">
+        @if(isLoading){
+        <span
+          class="w-full flex justify-center py-3.5 px-4 border border-transparent rounded-xl shadow-md text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition duration-200 ease-in-out transform hover:-translate-y-0.5 disabled:hover:translate-y-0 active:translate-y-0">
+          <span class="self-center">
+            <mat-progress-spinner mode="indeterminate" diameter="20" color="accent" class="white-spinner">
+            </mat-progress-spinner>
+          </span>
+        </span>
+        }@else{
+        <button type="submit" [disabled]="signUpForm.invalid"
+          class="w-full flex justify-center py-3.5 px-4 border border-transparent rounded-xl shadow-md text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition duration-200 ease-in-out transform hover:-translate-y-0.5 disabled:hover:translate-y-0 active:translate-y-0">
+          Sign Up
+        </button>
+        }
+      </div>
+    </form>
+    <div class="text-center mt-6">
+      <p class="text-sm text-slate-600 font-medium">Already have an account?
+        <a routerLink="/sign-in" class="text-indigo-600 hover:text-indigo-800 transition-colors font-bold">Sign in</a>
+      </p>
+    </div>
+  </div>
+</div>
