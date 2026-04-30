@@ -19,11 +19,6 @@ export class ProfileService{
 
     myProfile(id: string){
         return this.http.get<ModelAppInterfaces.Profile>( environment.API + `/profile/get-profile/${id}` )
-            .pipe(
-                tap(profile_data_reponse =>{
-                    localStorage.setItem("role", profile_data_reponse.role)
-                })
-            )
     }
 
     deleteProfile(id: string){

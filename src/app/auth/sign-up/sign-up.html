@@ -106,19 +106,16 @@
       </div>
 
       <div class="pt-4">
-        @if(isLoading){
-        <span
+     
+        <button type="submit" [disabled]="signUpForm.invalid "
           class="w-full flex justify-center py-3.5 px-4 border border-transparent rounded-xl shadow-md text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition duration-200 ease-in-out transform hover:-translate-y-0.5 disabled:hover:translate-y-0 active:translate-y-0">
-          <span class="self-center">
-            creating account...
-          </span>
-        </span>
-        }@else{
-        <button type="submit" [disabled]="signUpForm.invalid"
-          class="w-full flex justify-center py-3.5 px-4 border border-transparent rounded-xl shadow-md text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition duration-200 ease-in-out transform hover:-translate-y-0.5 disabled:hover:translate-y-0 active:translate-y-0">
-          Sign Up
+          @if(false){
+           creating account..
+          } @else {
+           Sign Up
+          }
         </button>
-        }
+      
       </div>
     </form>
     <div class="text-center mt-6">

@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import type { ModelAppInterfaces } from '../../../models/type.model'
 import { CommonModule } from '@angular/common';
+import { ProfileService } from '../../../services/profile.service';
 
 
 @Component({
@@ -26,21 +27,29 @@ export class SignUp {
 
   constructor(
     private authService: AuthService,
+    private profileService: ProfileService,
     private formBuilder: FormBuilder,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {
     this.signUpForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(4)]],
-      lastname: ['', [Validators.required, Validators.minLength(4)]],
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      lastname: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      phone: ['', [Validators.required]]
+      phone: ['']
     })
   }
 
   isLoading: boolean = false;
   onUsesrSignUp() {
-    this.isLoading = true;
+
+    if (!this.signUpForm.valid) return;
+
+    Promise.resolve().then(() => {
+      this.isLoading = true;
+    });
+
     if (this.signUpForm.valid) {
       const { name, lastname, email, password, phone } : ModelAppInterfaces.SignUp = this.signUpForm.value
       this.authService.sign_up({name, lastname, email, password, phone }).subscribe({
@@ -48,6 +57,18 @@ export class SignUp {
           this.showSnackMsgBar('Sign-up successful!', 'OK');
           this.isLoading = false;
           this.clearForm();
+          this.router.navigate(['/welcome-landing-page']);
+
+          const id = response.user.id;
+
+          this.profileService.myProfile(id).subscribe({
+            next: (profile_data) => {
+              localStorage.setItem('role', profile_data.role);
+            },
+            error: (error) => {
+              console.log('Error fetching profile data:', error);
+            }
+          });
         },
         error: (error) => {
           this.showSnackMsgBar('Sign-up failed!', 'Retry');
