@@ -4,6 +4,8 @@ import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angula
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterLink } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import type { ModelAppInterfaces } from '../../../models/type.model'
+// import {}
 
 
 @Component({
@@ -27,19 +29,20 @@ export class SignUp {
     private snackBar: MatSnackBar
   ) {
     this.signUpForm = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.minLength(4)]],
+      lastname: ['', [Validators.required, Validators.minLength(4)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      phone: ['']
+      phone: ['', [Validators.required]]
     })
   }
 
   isLoading: boolean = false;
   onUsesrSignUp() {
-
     this.isLoading = true;
     if (this.signUpForm.valid) {
-      const { email, password, phone } = this.signUpForm.value
-      this.authService.sign_up(email, password, phone).subscribe({
+      const { name, lastname, email, password, phone } : ModelAppInterfaces.SignUp = this.signUpForm.value
+      this.authService.sign_up({name, lastname, email, password, phone }).subscribe({
         next: (response: any) => {
           this.showSnackMsgBar('Sign-up successful!', 'OK');
           this.isLoading = false;

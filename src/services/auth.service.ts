@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../app/env/enviment.env";
 import { tap } from "rxjs";
+import type { ModelAppInterfaces } from "../models/type.model";
 
 
 @Injectable({
@@ -12,9 +13,9 @@ export class AuthService {
 
     constructor(private http: HttpClient) { }
 
-    sign_up(email: string, password: string, phone: string) {
+    sign_up(sign_up_form: ModelAppInterfaces.SignUp) {
         return this.http
-            .post(`${environment.API}/auth/sign-up`, { email, password, phone })
+            .post(`${environment.API}/auth/sign-up`, sign_up_form)
             .pipe(
                 tap((response: any) => {
                     if (response && response.access_token) {
@@ -24,9 +25,9 @@ export class AuthService {
             );
     }
 
-    sign_in(email: string, password: string) {
+    sign_in(sign_in_form: ModelAppInterfaces.SignIn) {
         return this.http
-            .post(`${environment.API}/auth/sign-in`, { email, password })
+            .post(`${environment.API}/auth/sign-in`, sign_in_form)
             .pipe(
                 tap((response: any) => {
                     if (response && response.access_token) {

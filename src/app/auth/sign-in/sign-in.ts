@@ -36,7 +36,7 @@ export class SignIn {
     this.isLoading = true;
     if (this.signInForm.valid) {
       const { email, password } = this.signInForm.value
-      this.authService.sign_in(email, password).subscribe({
+      this.authService.sign_in({email, password}).subscribe({
         next: (response: any) => {
           this.isLoading = false;
           this.showSnackMsgBar('Sign-in successful!', 'OK');
