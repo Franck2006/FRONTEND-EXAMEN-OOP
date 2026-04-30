@@ -5,7 +5,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterLink } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import type { ModelAppInterfaces } from '../../../models/type.model'
-// import {}
+import { CommonModule } from '@angular/common';
 
 
 @Component({
@@ -14,8 +14,9 @@ import type { ModelAppInterfaces } from '../../../models/type.model'
     ReactiveFormsModule,
     MatSnackBarModule,
     RouterLink,
-    MatProgressSpinnerModule
-  ],
+    MatProgressSpinnerModule,
+    CommonModule
+],
   templateUrl: './sign-up.html',
   styleUrl: './sign-up.css',
 })
@@ -51,6 +52,7 @@ export class SignUp {
         error: (error) => {
           this.showSnackMsgBar('Sign-up failed!', 'Retry');
           this.isLoading = false;
+          console.log('Sign-up error:', error.message);
         }
       });
     }
