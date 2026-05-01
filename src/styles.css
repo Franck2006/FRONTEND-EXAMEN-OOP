@@ -6,9 +6,13 @@
 }
 
 /* this is for the scroll bar */
-.custom-scroll::-webkit-scrollbar { width: 6px; }
-.custom-scroll::-webkit-scrollbar-track { background: #f8fafc; border-radius: 10px; }
+.custom-scroll::-webkit-scrollbar { width: 0; }
+/* .custom-scroll::-webkit-scrollbar-track { background: #f8fafc; border-radius: 10px; }
 .custom-scroll::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 10px; }
+.custom-scroll::-webkit-scrollbar-thumb:hover { background: #2563eb; } */
+
+.custom-scroll::-webkit-scrollbar-track { background: transparent; border-radius: 10px; }
+.custom-scroll::-webkit-scrollbar-thumb { background: transparent; border-radius: 10px; }
 .custom-scroll::-webkit-scrollbar-thumb:hover { background: #2563eb; }
 
 /* this is for the custom spinner*/
