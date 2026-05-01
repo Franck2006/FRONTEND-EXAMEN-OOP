@@ -13,7 +13,7 @@ export class ProfileService{
     ){}
 
     getAllProfiles(){
-        return this.http.get<ModelAppInterfaces.Profile>( environment.API + "/profile/get-all-profiles" )
+        return this.http.get( environment.API + "/profile/get-all-profiles" )
     }
 
     myProfile(id: string){

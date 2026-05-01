@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ScheduleService } from '../../../services/schedule.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-schedule-pannel',
-  imports: [],
+  imports: [
+    CommonModule
+  ],
   templateUrl: './schedule-pannel.html',
   styleUrl: './schedule-pannel.css',
 })

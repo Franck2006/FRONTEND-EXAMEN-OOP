@@ -1,8 +1,8 @@
 <div
-  class="grid grid-cols-1 h-[85vh] gap-4 md:grid-cols-[auto_1fr] w-full custom-scroll overflow-y-auto snap-y snap-proximity"
+  class="grid grid-cols-1 h-[85vh] pb-20 gap-4 md:grid-cols-[auto_1fr] w-full custom-scroll overflow-y-auto snap-y snap-proximity"
 >
   <div
-    class="border h-[400px] bg-slate-800 border-gray-500 rounded-2xl p-4 flex flex-col gap-4 snap-start"
+    class="border h-auto md:h-100 bg-slate-800 border-gray-500 rounded-2xl p-4 flex flex-col gap-4 snap-start"
   >
     <div class="flex items-center gap-2">
       <div class="bg-green-800/80 flex items-center justify-center p-1 rounded-full">
@@ -28,36 +28,37 @@
 
     <div>
       <p>selectionner la date</p>
-      <div class="border border-gray-500 rounded-md w-80 p-2">
+      <div class="border border-gray-500 rounded-md w-full md:w-80 p-2">
         <input type="date" name="date" id="date" class="w-full" />
       </div>
     </div>
 
-    <div class="flex items-center">
-      <div>
+    <div class="flex flex-col md:flex-row items-center w-full">
+      <div class="w-full">
         <p>heure fin</p>
-        <div class="border border-gray-500 rounded-md w-40">
+        <div class="border border-gray-500 rounded-md w-full md:w-40">
           <input type="time" name="date" id="date" class="w-full h-full px-2 py-2" />
         </div>
       </div>
-      <div class="">
+      <div class="w-full">
         <p>selectioner l'heure fin</p>
-        <div class="border border-gray-500 rounded-md w-40">
+        <div class="border border-gray-500 rounded-md w-full md:w-40">
           <input type="time" name="date" id="date" class="w-full h-full px-2 py-2" />
         </div>
       </div>
     </div>
 
-
     <div>
       <p>choissir le patient</p>
-      <div class="border border-gray-500 rounded-md w-80 p-2">
+      <div class="border border-gray-500 rounded-md w-full md:w-80 p-2">
         <input type="date" name="date" id="date" class="w-full" />
       </div>
     </div>
 
     <div class="w-full">
       <button
+        type="submit"
+        [disabled]="false"
         class="bg-blue-600 hover:bg-blue-700 transition-all text-white w-full py-3 cursor-pointer rounded-full"
       >
         submit
@@ -65,7 +66,87 @@
     </div>
   </div>
 
-  <div class="border h-[400px] bg-slate-800 border-gray-500 rounded-2xl p-4 snap-end">
-    <p>schedule-pannel works!</p>
+  <div
+    class="border h-100 bg-slate-800 border-gray-500 rounded-2xl p-4 snap-end flex flex-col justify-between"
+  >
+    <div>
+      <p class="font-medium text-xl">user messages request</p>
+    </div>
+
+    <div class="h-[90%] custom-scroll overflow-y-auto snap-y snap-proximity space-y-4 pb-20">
+      <div
+        *ngFor="let item of [2, 2, 3, 2, 3, 32]"
+        class="w-full border gap-8 md:gap-0 border-gray-500 p-2 rounded-2xl md:rounded-full flex flex-col md:flex-row md:justify-between items-center"
+      >
+        <div class="flex gap-2">
+          <div
+            class="w-16 h-16 rounded-full border-gray-500 border-2 border-dotted overflow-hidden"
+          >
+            @if (true) {
+              <div
+                class="text-2xl font-bold text-slate-400 h-full w-full flex items-center justify-center bg-slate-900"
+              >
+                <p>FA</p>
+              </div>
+            } @else {
+              <img src="" alt="" class="w-full h-full" />
+            }
+          </div>
+          <div>
+            <p class="font-bold">Franck Amani</p>
+            <p class="italic text-slate-200">
+              this is the message that i wanted to share with you ...
+            </p>
+          </div>
+        </div>
+        <div class="flex flex-col md:flex-row w-full md:w-auto items-center gap-2">
+          <button class="border border-gray-500 rounded-full px-4 py-2 w-full md:w-auto">
+            lire
+          </button>
+          <button class="border border-gray-500 rounded-full px-4 py-2 w-full md:w-auto">
+            approver rendez-vous
+          </button>
+          <button class="border border-gray-500 rounded-full px-4 py-2 w-full md:w-auto">
+            repondre
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="border flex flex-col justify-between h-100 bg-slate-800 md:col-span-2 border-gray-500 rounded-2xl p-4 snap-end"
+  >
+    <div>
+      <p class="capitalize text-xl font-medium">mes rendez-vous avec les patient</p>
+    </div>
+
+    <div class="w-full h-[85%] custom-scroll overflow-y-auto snap-y snap-proximity pb-20">
+      <table class="w-full text-start border border-white  snap-start ">
+        <thead class=" bg-slate-900 border border-gray-500 sticky">
+          <th class="text-start px-4 py-2 capitalize">name</th>
+          <th class="text-start px-4 py-2 capitalize">lasthname</th>
+          <th class="text-start px-4 py-2 capitalize">date</th>
+          <th class="text-start px-4 py-2 capitalize">heure</th>
+          <th class="text-start px-4 py-2 capitalize">email</th>
+          <th class="text-start px-4 py-2 capitalize">rendez-vous</th>
+        </thead>
+         <tbody class=" ">
+            <tr class="border border-gray-500" *ngFor="let item of [4,4,5,4,5,6,5,4,4,5,6,4,4,5]">
+              <td class="text-start px-4 py-2 capitalize">Franck</td>
+              <td class="text-start px-4 py-2 capitalize">Amani</td>
+              <td class="text-start px-4 py-2 capitalize">2020-10-10</td>
+              <td class="text-start px-4 py-2 capitalize">10:10</td>
+              <td class="text-start px-4 py-2 capitalize">franck@gmail.com</td>
+              <td class="text-start px-4 py-2 capitalize">
+                <button class="border border-gray-500 w-full rounded-full">
+                  fait
+                </button>
+              </td>
+            </tr>
+          
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

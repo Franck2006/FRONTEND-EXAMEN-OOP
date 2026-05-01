@@ -1,8 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-apponitement-pannel',
-  imports: [],
+  imports: [
+    CommonModule
+  ],
   templateUrl: './apponitement-pannel.html',
   styleUrl: './apponitement-pannel.css',
 })

@@ -1,10 +1,18 @@
 import { Component } from '@angular/core';
-import { RouterLinkActive, RouterLink } from '@angular/router';
+import { SelectPannelHook } from '../../../hooks/select-file.hook';
 
 @Component({
   selector: 'app-left-bar',
-  imports: [RouterLinkActive, RouterLink],
+  imports: [],
   templateUrl: './left-bar.html',
   styleUrl: './left-bar.css',
 })
-export class LeftBar {}
+export class LeftBar{
+  constructor(
+    private selectPannel: SelectPannelHook
+  ){}
+
+  selectSelectedPannel(pannel: string){
+    this.selectPannel.setChoosenPannel(pannel)
+  }
+}

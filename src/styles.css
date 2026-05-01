@@ -45,3 +45,7 @@ form.slider-from-down{
         transform: translateY(0);
     }
 }
+
+button{
+    cursor: pointer;
+}
