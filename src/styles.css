@@ -4,3 +4,40 @@
 .white-spinner {
   --mdc-circular-progress-active-indicator-color: white;
 }
+
+/* this is for the scroll bar */
+.custom-scroll::-webkit-scrollbar { width: 6px; }
+.custom-scroll::-webkit-scrollbar-track { background: #f8fafc; border-radius: 10px; }
+.custom-scroll::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 10px; }
+.custom-scroll::-webkit-scrollbar-thumb:hover { background: #2563eb; }
+
+/* this is for the custom spinner*/
+.white-spinner {
+  --mdc-circular-progress-active-indicator-color: white;
+}
+
+html, body { height: 100%; margin: 0; box-sizing: border-box; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+p{ margin: 0;}
+img{
+    object-fit: cover;
+}
+
+input{
+    outline: none;
+    border: none;
+}
+
+div.slider-from-down,
+form.slider-from-down{
+    animation: slider_from_down .15s ease-in-out forwards;
+}
+
+@keyframes slider_from_down {
+    from{
+        transform: translateY(20px);
+    }
+    to{
+        transform: translateY(0);
+    }
+}

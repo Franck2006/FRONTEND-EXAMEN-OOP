@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { Router, RouterLink } from '@angular/router';
+import {  RouterLink } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import type { ModelAppInterfaces } from '../../../models/type.model'
 import { CommonModule } from '@angular/common';
 import { ProfileService } from '../../../services/profile.service';
+import { SetPageByRoleHook } from '../../../hooks/set-page-by-role.hook';
+// import { getPageByRole } from '../../../hooks/set-page-by-role.hook';
 
 
 @Component({
@@ -30,7 +32,7 @@ export class SignUp {
     private profileService: ProfileService,
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
-    private router: Router
+    private setPageByRoleHook: SetPageByRoleHook
   ) {
     this.signUpForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
@@ -57,13 +59,15 @@ export class SignUp {
           this.showSnackMsgBar('Sign-up successful!', 'OK');
           this.isLoading = false;
           this.clearForm();
-          this.router.navigate(['/welcome-landing-page']);
+          
+          
 
           const id = response.user.id;
 
           this.profileService.myProfile(id).subscribe({
             next: (profile_data) => {
               localStorage.setItem('role', profile_data.role);
+              this.setPageByRoleHook.getPageByRole();
             },
             error: (error) => {
               console.log('Error fetching profile data:', error);
@@ -79,6 +83,8 @@ export class SignUp {
     }
     else { }
   }
+
+ 
 
   clearForm() {
     this.signUpForm.reset();

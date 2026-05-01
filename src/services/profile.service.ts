@@ -2,7 +2,6 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "../app/env/enviment.env";
 import type { ModelAppInterfaces } from "../models/type.model";
-import { tap } from "rxjs";
 
 @Injectable({
     providedIn:"root"

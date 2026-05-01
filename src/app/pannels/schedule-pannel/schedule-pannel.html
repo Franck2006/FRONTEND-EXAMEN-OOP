@@ -1,0 +1,71 @@
+<div
+  class="grid grid-cols-1 h-[85vh] gap-4 md:grid-cols-[auto_1fr] w-full custom-scroll overflow-y-auto snap-y snap-proximity"
+>
+  <div
+    class="border h-[400px] bg-slate-800 border-gray-500 rounded-2xl p-4 flex flex-col gap-4 snap-start"
+  >
+    <div class="flex items-center gap-2">
+      <div class="bg-green-800/80 flex items-center justify-center p-1 rounded-full">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="size-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+          />
+        </svg>
+      </div>
+      <div>
+        <h1>ajouter une disponibilité</h1>
+      </div>
+    </div>
+
+    <div>
+      <p>selectionner la date</p>
+      <div class="border border-gray-500 rounded-md w-80 p-2">
+        <input type="date" name="date" id="date" class="w-full" />
+      </div>
+    </div>
+
+    <div class="flex items-center">
+      <div>
+        <p>heure fin</p>
+        <div class="border border-gray-500 rounded-md w-40">
+          <input type="time" name="date" id="date" class="w-full h-full px-2 py-2" />
+        </div>
+      </div>
+      <div class="">
+        <p>selectioner l'heure fin</p>
+        <div class="border border-gray-500 rounded-md w-40">
+          <input type="time" name="date" id="date" class="w-full h-full px-2 py-2" />
+        </div>
+      </div>
+    </div>
+
+
+    <div>
+      <p>choissir le patient</p>
+      <div class="border border-gray-500 rounded-md w-80 p-2">
+        <input type="date" name="date" id="date" class="w-full" />
+      </div>
+    </div>
+
+    <div class="w-full">
+      <button
+        class="bg-blue-600 hover:bg-blue-700 transition-all text-white w-full py-3 cursor-pointer rounded-full"
+      >
+        submit
+      </button>
+    </div>
+  </div>
+
+  <div class="border h-[400px] bg-slate-800 border-gray-500 rounded-2xl p-4 snap-end">
+    <p>schedule-pannel works!</p>
+  </div>
+</div>

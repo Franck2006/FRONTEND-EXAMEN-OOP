@@ -5,6 +5,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router, RouterLink } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ProfileService } from '../../../services/profile.service';
+import { SetPageByRoleHook } from '../../../hooks/set-page-by-role.hook';
 
 @Component({
   selector: 'app-sign-in',
@@ -26,7 +27,7 @@ export class SignIn {
     private profileService: ProfileService,
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
-    private router: Router
+    private setPageByRoleHook: SetPageByRoleHook
   ) {
     this.signInForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -43,13 +44,13 @@ export class SignIn {
         next: (response: any) => {
           this.isLoading = false;
           this.showSnackMsgBar('Sign-in successful!', 'OK');
-          this.router.navigate(['/welcome-landing-page']);
 
           const id = response.user.id;
 
           this.profileService.myProfile(id).subscribe({
             next: (profile_data) => {
               localStorage.setItem('role', profile_data.role);
+              this.setPageByRoleHook.getPageByRole();
             },
             error: (error) => {
               console.log('Error fetching profile data:', error);

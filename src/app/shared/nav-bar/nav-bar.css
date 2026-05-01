@@ -1,0 +1,10 @@
+.red-badge .mat-badge-content {
+    background-color: rgb(242, 103, 103);
+    color: white;
+    border-radius: 100%;
+    padding: 2px;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
