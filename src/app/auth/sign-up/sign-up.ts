@@ -67,6 +67,7 @@ export class SignUp {
           this.profileService.myProfile(id).subscribe({
             next: (profile_data) => {
               localStorage.setItem('role', profile_data.role);
+              localStorage.setItem('id', profile_data.id);
               this.setPageByRoleHook.getPageByRole();
             },
             error: (error) => {

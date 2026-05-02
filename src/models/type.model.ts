@@ -7,6 +7,7 @@ export namespace ModelAppInterfaces{
     }
 
     export interface SignUp{
+       
         email: string
         password: string
         phone: string
@@ -20,6 +21,7 @@ export namespace ModelAppInterfaces{
     }
 
     export interface Profile extends SignUp{
+        id: string
         role: string 
     }
 

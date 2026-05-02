@@ -212,11 +212,18 @@
     </div>
   </div>
 
-  <div class="absolute bottom-4 right-4 left-4 bg-red-400 p-4 rounded-full cursor-pointer">
-    <button class="flex gap-2 items-center cursor-pointer">
+  <div 
+    (click)="signOut()"
+    class="absolute bottom-4 right-4 left-4 bg-red-400 p-4 rounded-full cursor-pointer"
+  >
+    <button 
+      class="flex gap-2 items-center cursor-pointer"
+      
+    >
       <span class="cursor-pointer"> sign out </span>
       <svg
-        xmlns="http://www.w3.org/2000/svg"
+        xmlns="http://www.w3.org/2000/svg"   (click)="signOut()"
+  
         fill="none"
         viewBox="0 0 24 24"
         stroke-width="1.5"

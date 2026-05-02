@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SelectPannelHook } from '../../../hooks/select-file.hook';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-left-bar',
@@ -9,10 +10,16 @@ import { SelectPannelHook } from '../../../hooks/select-file.hook';
 })
 export class LeftBar{
   constructor(
-    private selectPannel: SelectPannelHook
+    private selectPannel: SelectPannelHook,
+    private router: Router
   ){}
 
   selectSelectedPannel(pannel: string){
     this.selectPannel.setChoosenPannel(pannel)
+  }
+
+  signOut() {
+    localStorage.clear();
+    this.router.navigate(['/sign-in']);
   }
 }
