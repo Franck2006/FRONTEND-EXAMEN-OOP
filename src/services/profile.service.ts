@@ -41,4 +41,16 @@ export class ProfileService {
       profile_data,
     );
   }
+
+  getAllDoctors() {
+    return this.http.get<ModelAppInterfaces.Profile[]>(
+      environment.API + '/profile/get-all-patients-or-doctors?role=DOCTOR',
+    );
+  }
+
+  getAllPatients() {
+    return this.http.get<ModelAppInterfaces.Profile[]>(
+      environment.API + '/profile/get-all-patients-or-doctors?role=PATIENT',
+    );
+  }
 }

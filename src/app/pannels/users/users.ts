@@ -29,7 +29,6 @@ export class Users implements OnInit {
       next: (profiles) => {
         console.log(profiles);
         this.allProfiles.set(profiles);
-        // this.cdr.detectChanges();
       },
       error: (err) => {
         console.error(err);
