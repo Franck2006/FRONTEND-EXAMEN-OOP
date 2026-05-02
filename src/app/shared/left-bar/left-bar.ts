@@ -8,14 +8,16 @@ import { Router } from '@angular/router';
   templateUrl: './left-bar.html',
   styleUrl: './left-bar.css',
 })
-export class LeftBar{
+export class LeftBar {
   constructor(
     private selectPannel: SelectPannelHook,
-    private router: Router
-  ){}
+    private router: Router,
+  ) {}
 
-  selectSelectedPannel(pannel: string){
-    this.selectPannel.setChoosenPannel(pannel)
+  role: string = localStorage.getItem('role') ?? '';
+
+  selectSelectedPannel(pannel: string) {
+    this.selectPannel.setChoosenPannel(pannel);
   }
 
   signOut() {

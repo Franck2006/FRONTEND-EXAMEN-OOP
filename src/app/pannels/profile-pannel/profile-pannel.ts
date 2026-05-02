@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, signal } from '@angular/core';
 import { ProfileService } from '../../../services/profile.service';
 import { ModelAppInterfaces } from '../../../models/type.model';
 
@@ -8,21 +8,24 @@ import { ModelAppInterfaces } from '../../../models/type.model';
   templateUrl: './profile-pannel.html',
   styleUrl: './profile-pannel.css',
 })
-export class ProfilePannel implements OnInit{
+export class ProfilePannel implements OnInit {
   constructor(
-    private profile: ProfileService
-  ) { }
+    private profile: ProfileService,
+    private cdr: ChangeDetectorRef,
+  ) {}
 
-  
   ngOnInit(): void {
-    this.getMyProfile()
+    this.getMyProfile();
   }
 
-  user_profile: ModelAppInterfaces.Profile | any = {}
-  getMyProfile(){
+  user_profile = signal<ModelAppInterfaces.Profile | any>({});
+  getMyProfile() {
     this.profile.me(localStorage.getItem('id') || '').subscribe({
-      next:(profile)=>this.user_profile = profile,
-      error:(err)=> console.log(err)
-    })
+      next: (profile) => {
+        this.user_profile.set(profile);
+        // this.cdr.detectChanges();
+      },
+      error: (err) => console.log(err),
+    });
   }
 }

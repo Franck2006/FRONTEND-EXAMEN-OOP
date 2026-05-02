@@ -1,0 +1,39 @@
+<div
+  (click)="dismiss_model(false)"
+  class="bg-black/60 transition-all backdrop-blur-sm fixed inset-0 flex items-center justify-center space-y-3"
+>
+  <form
+    (click)="$event.stopPropagation()"
+    [formGroup]="roleData"
+    (ngSubmit)="onChangeRole()"
+    class="border-gray- p-4 rounded-2xl bg-slate-900 relative w-[90vw] flex flex-col gap-4 md:w-100"
+  >
+    <button
+      type="button"
+      class="absolute right-2 top-2 w-9 h-9 rounded-md"
+      (click)="dismiss_model(false)"
+    >
+      &times;
+    </button>
+    <div class="capitalize text-xl">editer le role</div>
+    <div class="w-full">
+      <p>role</p>
+      <select
+        name="role"
+        id="role"
+        class="text-blue-950 py-2 px-2 rounded-md bg-white border-0 outline-0 w-full"
+        formControlName="role"
+      >
+        <option value="PATIENT" [selected]="enable_data_store().role === 'PATIENT'">patient</option>
+        <option value="DOCTOR" [selected]="enable_data_store().role === 'DOCTOR'">doctor</option>
+        <option value="USER" selected>user</option>
+      </select>
+    </div>
+    <button
+      type="submit"
+      class="w-full py-1 rounded-md bg-blue-600 hover:bgblue70 active:bg-blue-600"
+    >
+      changer le role
+    </button>
+  </form>
+</div>

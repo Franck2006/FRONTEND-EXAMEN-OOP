@@ -3,48 +3,69 @@
     <p class="text-3xl">les utilisateurs</p>
   </div>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-    <div
-      class="relative md:h-100 h-auto border bg-slate-800 border-gray-500 rounded-2xl overflow-hidden snap-start"
-      *ngFor="let profile of [1, 2, 3, 4, 5, 6] "
-    >
-      <div class="w-full h-[45%]">
-        <img
-          src="https://i.pinimg.com/1200x/3e/f3/50/3ef350dc86cc82a092463e5d795654b5.jpg"
-          alt=""
-          class="w-full h-full"
-        />
-      </div>
-      <div class="p-4 first-letter:uppercase space-y-4">
-        <div>
-          <p class="first-letter:uppercase">doctor</p>
-          <p class="capitalize font-medium">{{ profile }} {{ profile }}</p>
+    @for (profile of allProfiles(); track profile.id) {
+      <div
+        class="relative md:h-100 h-auto border bg-slate-800 border-gray-500 rounded-2xl overflow-hidden snap-start"
+      >
+        <div class="w-full h-[45%]">
+          <img
+            src="https://i.pinimg.com/1200x/3e/f3/50/3ef350dc86cc82a092463e5d795654b5.jpg"
+            alt=""
+            class="w-full h-full"
+          />
+        </div>
+        <div class="p-4 first-letter:uppercase space-y-4">
+          <div>
+            <p class="first-letter:uppercase">
+              @if (profile.role === 'DOCTOR') {
+                doctor
+              }
+              @if (profile.role === 'PATIENT') {
+                patient
+              }
+              @if (profile.role === 'SUPER_ADMIN') {
+                super_admin
+              }
+              @if (profile.role === 'USER') {
+                user
+              }
+            </p>
+            <p class="capitalize font-medium">{{ profile.name }} {{ profile.lastname }}</p>
+          </div>
+          <div>
+            <p class="first-letter:uppercase">temps</p>
+            <p class="capitalize font-medium">franck amani</p>
+          </div>
+          <div>
+            <p class="first-letter:uppercase">heure</p>
+            <p class="capitalize font-medium">franck amani</p>
+          </div>
         </div>
         <div>
-          <p class="first-letter:uppercase">temps</p>
-          <p class="capitalize font-medium">franck amani</p>
-        </div>
-        <div>
-          <p class="first-letter:uppercase">heure</p>
-          <p class="capitalize font-medium">franck amani</p>
+          <button
+            class="absolute left-4 md:left-auto right-4 bottom-4 bg-blue-600 active:bg-blue-600 hover:bg-blue-700 transition-all rounded-full py-2 px-4"
+          >
+            faire un docteur
+          </button>
+          <button
+            class="absolute left-4 md:left-auto right-4 bottom-4 bg-blue-600 active:bg-blue-600 hover:bg-blue-700 transition-all rounded-full py-2 px-4"
+          >
+            voir docteur detail
+          </button>
+          <button
+            class="absolute left-4 md:left-auto right-4 bottom-4 bg-blue-600 active:bg-blue-600 hover:bg-blue-700 transition-all rounded-full py-2 px-4"
+            (click)="changeUserRole(profile, profile.id)"
+          >
+            voir docteur detail
+          </button>
         </div>
       </div>
-      <div>
-        <button
-          class="absolute left-4 md:left-auto right-4 bottom-4 bg-blue-600 active:bg-blue-600 hover:bg-blue-700 transition-all rounded-full py-2 px-4"
-        >
-          faire un docteur
-        </button>
-        <button
-          class="absolute left-4 md:left-auto right-4 bottom-4 bg-blue-600 active:bg-blue-600 hover:bg-blue-700 transition-all rounded-full py-2 px-4"
-        >
-          voir docteur detail
-        </button>
-        <button
-          class="absolute left-4 md:left-auto right-4 bottom-4 bg-blue-600 active:bg-blue-600 hover:bg-blue-700 transition-all rounded-full py-2 px-4"
-        >
-          voir docteur detail
-        </button>
-      </div>
-    </div>
+    }
   </div>
 </div>
+
+@if (modelStatus) {
+  <div>
+    <app-update-user-role />
+  </div>
+}

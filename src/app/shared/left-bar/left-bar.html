@@ -72,7 +72,7 @@
       <div class="cursor-pointer">mes rendez-vous</div>
     </div>
 
-     <div
+    <div
       (click)="selectSelectedPannel('set-appointement')"
       class="flex items-center cursor-pointer gap-2 hover:bg-slate-700 rounded-full p-1 pr-4 select-none"
     >
@@ -94,7 +94,6 @@
       </div>
       <div class="cursor-pointer">faire rendez-vous</div>
     </div>
-
 
     <div
       (click)="selectSelectedPannel('history')"
@@ -135,7 +134,7 @@
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
-            d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+            d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"
           />
         </svg>
       </div>
@@ -158,35 +157,37 @@
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
-            d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+            d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z"
           />
         </svg>
       </div>
       <div class="cursor-pointer">patients</div>
     </div>
 
-    <div
-      (click)="selectSelectedPannel('users')"
-      class="flex items-center cursor-pointer gap-2 hover:bg-slate-700 rounded-full p-1 pr-4 select-none"
-    >
-      <div class="w-10 h-10 flex items-center justify-center rounded-full bg-green-800">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="size-6"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-          />
-        </svg>
+    @if (role === 'SUPER_ADMIN') {
+      <div
+        (click)="selectSelectedPannel('users')"
+        class="flex items-center cursor-pointer gap-2 hover:bg-slate-700 rounded-full p-1 pr-4 select-none"
+      >
+        <div class="w-10 h-10 flex items-center justify-center rounded-full bg-green-800">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+            />
+          </svg>
+        </div>
+        <div class="cursor-pointer">users</div>
       </div>
-      <div class="cursor-pointer">users</div>
-    </div>
+    }
 
     <div
       (click)="selectSelectedPannel('profile')"
@@ -204,7 +205,7 @@
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
-            d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+            d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Zm6-10.125a1.875 1.875 0 1 1-3.75 0 1.875 1.875 0 0 1 3.75 0Zm1.294 6.336a6.721 6.721 0 0 1-3.17.789 6.721 6.721 0 0 1-3.168-.789 3.376 3.376 0 0 1 6.338 0Z"
           />
         </svg>
       </div>
@@ -212,18 +213,15 @@
     </div>
   </div>
 
-  <div 
+  <div
     (click)="signOut()"
     class="absolute bottom-4 right-4 left-4 bg-red-400 p-4 rounded-full cursor-pointer"
   >
-    <button 
-      class="flex gap-2 items-center cursor-pointer"
-      
-    >
+    <button class="flex gap-2 items-center cursor-pointer">
       <span class="cursor-pointer"> sign out </span>
       <svg
-        xmlns="http://www.w3.org/2000/svg"   (click)="signOut()"
-  
+        xmlns="http://www.w3.org/2000/svg"
+        (click)="signOut()"
         fill="none"
         viewBox="0 0 24 24"
         stroke-width="1.5"

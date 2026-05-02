@@ -1,32 +1,33 @@
-<div class="rounded-2xl h-full text-white ">
-  @if (selectedPannel === "dashboard") {
+<div class="rounded-2xl h-full text-white">
+  @if (selectedPannel === 'dashboard') {
     <div>
       <app-dashboard-pannel />
     </div>
-  } @else if (selectedPannel === "set-appointement") {
+  } @else if (selectedPannel === 'set-appointement') {
     <div>
       <app-schedule-pannel />
     </div>
-  } @else if (selectedPannel === "appointements") {
+  } @else if (selectedPannel === 'appointements') {
     <div>
       <app-apponitement-pannel />
     </div>
-  } @else if (selectedPannel === "doctors") {
+  } @else if (selectedPannel === 'doctors') {
     <div>
       <app-doctors />
     </div>
-  }
-   @else if (selectedPannel === "users") {
+  } @else if (selectedPannel === 'users') {
     <div>
       <app-users />
     </div>
-  }
-   @else if (selectedPannel === "patients") {
+  } @else if (selectedPannel === 'history') {
+    <div>
+      <app-history />
+    </div>
+  } @else if (selectedPannel === 'patients') {
     <div>
       <app-patients />
     </div>
-  }
-   @else if (selectedPannel === "profile") {
+  } @else if (selectedPannel === 'profile') {
     <div>
       <app-profile-pannel />
     </div>
