@@ -23,6 +23,8 @@ export namespace ModelAppInterfaces{
     export interface Profile extends SignUp{
         id: string
         role: string 
+        doctor: Doctor | null
+        patient: Patient | null
     }
 
     export interface Patient {

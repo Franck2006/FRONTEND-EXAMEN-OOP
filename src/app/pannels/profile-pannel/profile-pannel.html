@@ -25,8 +25,10 @@
         </div>
         <div class="space-y-8">
           <p class="capitalize text-2xl font-bold">
-            <span> dr&dot; </span>
-            <span> franck amani </span>
+            <span> dr.</span>
+            <span> 
+                {{user_profile.name}} {{user_profile.lastname}}
+            </span>
           </p>
           <p class="max-w-xl italic text-slate-300">
             Senior Cardiologist at MedCloud Central. Specialized in non-invasive diagnostic
@@ -43,7 +45,8 @@
       </div>
     </div>
     <div class="grid gap-4 grid-cols-1 md:grid-cols-2">
-      <div class="border bg-slate-800 border-gray-500 rounded-2xl p-4 row-span-2 space-y-6">
+      @if(user_profile){
+        <div class="border bg-slate-800 border-gray-500 rounded-2xl p-4 row-span-2 space-y-6">
         <div class="flex gap-x-1">
           <div
             class="w-8 h-8 bg-green-300/10 text-green-500 flex items-center justify-center rounded-md"
@@ -90,7 +93,7 @@
                 </svg>
               </div>
               <div>
-                <p>example@gmail.com</p>
+                <p>{{user_profile.email}}</p>
               </div>
             </div>
           </div>
@@ -116,7 +119,9 @@
                 </svg>
               </div>
               <div>
-                <p>+243 893993182</p>
+                <p>
+                  {{user_profile.phone}}
+                </p>
               </div>
             </div>
           </div>
@@ -182,6 +187,7 @@
           </div>
         </div>
       </div>
+      }
       <div class="border bg-slate-800 border-gray-500 rounded-2xl p-4"></div>
       <div class="border bg-slate-800 border-gray-500 rounded-2xl p-4"></div>
     </div>

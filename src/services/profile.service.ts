@@ -21,7 +21,7 @@ export class ProfileService{
     }
 
     me(id: string){
-        return this.http.get<ModelAppInterfaces.Profile>( environment.API + `/get-profile/me/${id}`)
+        return this.http.get<ModelAppInterfaces.Profile>( environment.API + `/profile/get-profile/me/${id}`)
     }
 
     deleteProfile(id: string){

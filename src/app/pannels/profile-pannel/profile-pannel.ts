@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService } from '../../../services/profile.service';
+import { ModelAppInterfaces } from '../../../models/type.model';
 
 @Component({
   selector: 'app-profile-pannel',
@@ -12,13 +13,16 @@ export class ProfilePannel implements OnInit{
     private profile: ProfileService
   ) { }
 
+  
   ngOnInit(): void {
+    this.getMyProfile()
+  }
+
+  user_profile: ModelAppInterfaces.Profile | any = {}
+  getMyProfile(){
     this.profile.me(localStorage.getItem('id') || '').subscribe({
-      next:(profile)=>{
-        console.log(`profile: ${JSON.stringify(profile)}`);
-      },error:(err)=>{
-        console.log(err);
-      }
+      next:(profile)=>this.user_profile = profile,
+      error:(err)=> console.log(err)
     })
   }
 }
