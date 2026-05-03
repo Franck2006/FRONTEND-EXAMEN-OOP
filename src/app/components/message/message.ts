@@ -28,10 +28,7 @@ export class Message implements OnInit {
 
   sendMessageDoctor(doctor_id: string) {
     const { message }: ModelAppInterfaces.Message = this.message.value;
-    const patient_id = localStorage.getItem('id') || '';
-
-    console.log('the id is: ' + patient_id);
-    console.log('the message is: ' + message);
+    const patient_id = this.modelStatusDataStorePatient().id;
 
     this.messageService.createMessage({ message, doctor_id, patient_id }).subscribe({
       next: (message) => {
@@ -44,12 +41,17 @@ export class Message implements OnInit {
     });
   }
 
-  modelStatusDataStore = signal<ModelHardCodedValues.EnableSendMessageModel | any>({});
+  modelStatusDataStoreDoctor = signal<ModelAppInterfaces.Doctor | any>({});
+  modelStatusDataStorePatient = signal<ModelAppInterfaces.Patient | any>({});
+
   getMessageModelStatus() {
     this.enablingModel.EnableSendMessageModel.subscribe({
-      next: ({ data }) => {
-        this.modelStatusDataStore.set(data);
-        console.log(data?.id);
+      next: ({ data, patient }) => {
+        this.modelStatusDataStoreDoctor.set(data);
+        this.modelStatusDataStorePatient.set(patient);
+
+        console.log(data);
+        console.log(patient?.id);
       },
       error: (e) => {
         console.log(e);
@@ -58,6 +60,6 @@ export class Message implements OnInit {
   }
 
   dismissMessageModel(status: boolean) {
-    this.enablingModel.setEnableSendMessageModel(status, null);
+    this.enablingModel.setEnableSendMessageModel(status, null, null);
   }
 }

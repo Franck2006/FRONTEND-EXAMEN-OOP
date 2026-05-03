@@ -13,7 +13,7 @@ export class PatientService {
   createpatient(patient: ModelAppInterfaces.Patient) {
     console.log('the id from the service is:  ' + patient.profile_id);
     return this.http
-      .post<ModelAppInterfaces.Patient>(environment.API + 'patient/create-patient', patient)
+      .post<ModelAppInterfaces.Patient>(environment.API + '/patient/create-patient', patient)
       .pipe(
         tap((patient_res: ModelAppInterfaces.Patient) => {
           localStorage.setItem('patient_id', patient_res.id || '');

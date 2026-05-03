@@ -27,9 +27,13 @@ export class EnablingModelHook {
   }
 
   private subjectEnableSendMessageModel =
-    new BehaviorSubject<ModelHardCodedValues.EnableSendMessageModel>({ status: false, data: null });
+    new BehaviorSubject<ModelHardCodedValues.EnableSendMessageModel>({
+      status: false,
+      data: null,
+      patient: null,
+    });
   EnableSendMessageModel = this.subjectEnableSendMessageModel.asObservable();
-  setEnableSendMessageModel(status: boolean, data: any) {
-    this.subjectEnableSendMessageModel.next({ status, data });
+  setEnableSendMessageModel(status: boolean, data: any, patient: any) {
+    this.subjectEnableSendMessageModel.next({ status, data, patient });
   }
 }

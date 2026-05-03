@@ -47,27 +47,16 @@ export class UpdateUserRole implements OnInit {
   onChangeRole() {
     const { role } = this.roleData.value;
 
-    console.log(`the role is ${role}`);
-
     this.profile.updateProfile({ role }, this.enable_data_store().profile.id).subscribe({
       next: (profile) => {
         if (profile.role.toLowerCase() === 'patient') {
           this.patientService.createpatient({ profile_id: profile.id }).subscribe({
-            next: () => {
-              console.log('patient created');
+            next: (patient) => {
+              console.log(patient);
             },
             error: (e) => {
               console.log(e);
               console.log('something went wrong on creating the patient');
-            },
-          });
-        } else if (profile.role.toLowerCase() === 'doctor') {
-          this.doctorService.createDotor({ profile_id: profile.id }).subscribe({
-            next: () => {
-              console.log('doctor created');
-            },
-            error: () => {
-              console.log('something went wrong on creating the doctor');
             },
           });
         }

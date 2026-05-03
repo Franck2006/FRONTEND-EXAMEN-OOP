@@ -40,14 +40,24 @@ export class Doctors implements OnInit {
   }
 
   openMessageModel(status: boolean, doctor: ModelAppInterfaces.Doctor | null) {
-    this.enablingModel.setEnableSendMessageModel(status, doctor);
+    const profile_id = localStorage.getItem('id') || '';
+    const profile = this.profiles().filter((patient: ModelAppInterfaces.Profile) => {
+      return patient.id === profile_id;
+    });
+
+    const { patient } = profile[0];
+
+    this.enablingModel.setEnableSendMessageModel(status, doctor, patient);
   }
 
-  patients = signal<ModelAppInterfaces.Patient[]>([]);
+  profiles = signal<ModelAppInterfaces.Profile[]>([]);
   getAllPatients() {
     this.profile.getAllPatients().subscribe({
-      next: (patient) => {
-        console.log(patient);
+      next: (profile) => {
+        this.profiles.set(profile);
+      },
+      error: (e) => {
+        console.log(e);
       },
     });
   }

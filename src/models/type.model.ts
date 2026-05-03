@@ -76,5 +76,6 @@ export namespace ModelHardCodedValues {
 
   export interface EnableSendMessageModel extends DataModel {
     data: ModelAppInterfaces.Message | null;
+    patient: ModelAppInterfaces.Patient | null;
   }
 }
