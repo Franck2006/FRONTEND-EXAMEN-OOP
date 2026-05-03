@@ -36,10 +36,10 @@ export class Users implements OnInit {
     });
   }
 
-  modelStatus!: boolean;
+  modelStatus = signal<boolean>(false);
   getModelStatusWithData() {
     this.enablingModel.EnableChangeRole.subscribe((enable_data) => {
-      this.modelStatus = enable_data.status;
+      this.modelStatus.set(enable_data.status);
     });
   }
 

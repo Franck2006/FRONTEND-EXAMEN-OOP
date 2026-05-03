@@ -56,7 +56,8 @@ export class UpdateUserRole implements OnInit {
             next: () => {
               console.log('patient created');
             },
-            error: () => {
+            error: (e) => {
+              console.log(e);
               console.log('something went wrong on creating the patient');
             },
           });

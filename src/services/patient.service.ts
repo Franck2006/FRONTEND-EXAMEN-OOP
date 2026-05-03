@@ -11,7 +11,8 @@ export class PatientService {
   constructor(private http: HttpClient) {}
 
   createpatient(patient: ModelAppInterfaces.Patient) {
-    this.http
+    console.log('the id from the service is:  ' + patient.profile_id);
+    return this.http
       .post<ModelAppInterfaces.Patient>(environment.API + 'patient/create-patient', patient)
       .pipe(
         tap((patient_res: ModelAppInterfaces.Patient) => {

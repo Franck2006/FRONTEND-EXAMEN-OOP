@@ -9,38 +9,32 @@ import { SetPageByRoleHook } from '../../../hooks/set-page-by-role.hook';
 
 @Component({
   selector: 'app-sign-in',
-  imports: [
-    ReactiveFormsModule,
-    MatSnackBarModule,
-    RouterLink,
-    MatProgressSpinnerModule
-  ],
+  imports: [ReactiveFormsModule, MatSnackBarModule, RouterLink, MatProgressSpinnerModule],
   templateUrl: './sign-in.html',
   styleUrl: './sign-in.css',
 })
 export class SignIn {
-
-  signInForm: FormGroup
+  signInForm: FormGroup;
 
   constructor(
     private authService: AuthService,
     private profileService: ProfileService,
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
-    private setPageByRoleHook: SetPageByRoleHook
+    private setPageByRoleHook: SetPageByRoleHook,
   ) {
     this.signInForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
-    })
+      password: ['', [Validators.required, Validators.minLength(6)]],
+    });
   }
 
   isLoading: boolean = false;
   onUserSignIn() {
     this.isLoading = true;
     if (this.signInForm.valid) {
-      const { email, password } = this.signInForm.value
-      this.authService.sign_in({email, password}).subscribe({
+      const { email, password } = this.signInForm.value;
+      this.authService.sign_in({ email, password }).subscribe({
         next: (response: any) => {
           this.isLoading = false;
           this.showSnackMsgBar('Sign-in successful!', 'OK');
@@ -55,17 +49,16 @@ export class SignIn {
             },
             error: (error) => {
               console.log('Error fetching profile data:', error);
-            }
+            },
           });
-
         },
         error: (error) => {
           this.isLoading = false;
           this.showSnackMsgBar('Sign-in failed!', 'Retry');
-        }
+        },
       });
+    } else {
     }
-    else { }
   }
 
   showSnackMsgBar(msg: string, action: string) {
@@ -77,5 +70,4 @@ export class SignIn {
       console.log(' this is the action');
     });
   }
-
 }
