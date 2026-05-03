@@ -44,8 +44,6 @@ export class SchedulePannel implements OnInit {
       next: (doctors: ModelAppInterfaces.Doctor[]) => {
         const doctor = doctors.filter((doctor) => doctor?.profile?.id === profile_id);
 
-        console.log(doctor[0].id);
-
         this.messageService.getOneMessageForDoctor(doctor[0].id).subscribe({
           next: (message) => {
             console.log(message);
