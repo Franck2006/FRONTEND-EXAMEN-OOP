@@ -27,36 +27,32 @@ export class SchedulePannel implements OnInit {
   getAllSchedules() {
     this.schedule.getAllSchedules().subscribe({
       next: (schedules: any) => {
-        console.log(schedules);
-        console.log(this.allSchedules);
+        // console.log(schedules);
+        // console.log(this.allSchedules);
       },
       error: (error) => {
-        console.error(' something went wrong !!!');
+        console.log(' something went wrong !!!');
       },
     });
   }
 
-  doctor_id = signal<string | undefined>('');
   patientsUserRequests = signal<any>([]);
   getAllPatientMessages() {
     const profile_id = localStorage.getItem('id');
 
-    console.log(profile_id);
     this.doctorService.getAllDoctors().subscribe({
       next: (doctors: ModelAppInterfaces.Doctor[]) => {
         const doctor = doctors.filter((doctor) => doctor?.profile?.id);
 
-        this.doctor_id.set(doctor[0].id);
+        this.messageService.getOneMessageForDoctor(doctor[0].id).subscribe({
+          next: (message) => {
+            console.log(message);
+            this.patientsUserRequests.set(message);
+          },
+        });
       },
       error: () => {
         console.log(' someting went wrong ');
-      },
-    });
-
-    this.messageService.getOneMessageForDoctor(this.doctor_id).subscribe({
-      next: (message) => {
-        console.log(message);
-        this.patientsUserRequests.set(message);
       },
     });
   }

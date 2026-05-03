@@ -22,6 +22,7 @@ export class MessageService {
   }
 
   getOneMessageForDoctor(id: string | any) {
+    console.log(id);
     return this.http.get(environment.API + `/message/get-for-doctor/${id}`);
   }
 
