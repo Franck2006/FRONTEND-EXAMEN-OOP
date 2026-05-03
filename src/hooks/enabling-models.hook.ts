@@ -18,4 +18,11 @@ export class EnablingModelHook {
       profile,
     });
   }
+
+  private subjectEnableProfilEditModel =
+    new BehaviorSubject<ModelHardCodedValues.EnableProfilEditModel>({ status: false, data: null });
+  EnableProfilEditModel = this.subjectEnableProfilEditModel.asObservable();
+  setEnableProfilEditModel(status: boolean, data: any) {
+    this.subjectEnableProfilEditModel.next({ status, data });
+  }
 }

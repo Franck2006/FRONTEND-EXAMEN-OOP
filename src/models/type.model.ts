@@ -31,6 +31,7 @@ export namespace ModelAppInterfaces {
   export interface Doctor extends Patient {
     specialty: string;
     licenceNumber: number;
+    description: string;
   }
 
   export interface Schedule {
@@ -59,8 +60,14 @@ export namespace ModelAppInterfaces {
 }
 
 export namespace ModelHardCodedValues {
-  export interface EnablingChangeUserRole {
+  interface DataModel {
     status: boolean;
+  }
+  export interface EnablingChangeUserRole extends DataModel {
     profile: ModelAppInterfaces.Profile | null;
+  }
+
+  export interface EnableProfilEditModel extends DataModel {
+    data: any;
   }
 }
