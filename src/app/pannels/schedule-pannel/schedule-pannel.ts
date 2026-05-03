@@ -90,24 +90,28 @@ export class SchedulePannel implements OnInit {
 
   onAppointmenetSubmit() {
     const { available_date, start_time, end_time } = this.availabilityForm.value;
+    const available = new Date(available_date).toISOString();
+    const start = new Date(`${available_date}T${start_time}:00`).toISOString();
+    const end = new Date(`${available_date}T${end_time}:00`).toISOString();
 
-    this.scheduleService.createSchedule({ available_date, start_time, end_time }).subscribe({
-      next: (schedule_data: Partial<Observable<ModelAppInterfaces.Schedule>>) => {
-        console.log(schedule_data);
-        // this.appoitmentService.createAppointement({
-        //        patient_id:this.patient_id(),
-        // doctor_id: this.doctor_id() || "",
-        // schedule_id:schedule_data.
-        // schedule_id: schedule_data.,
-        // patient_id: this.patient_id(),
-        // doctor_id: this.doctor_id(),
-        // })
-      },
-    });
-
-    // console.log({ available_date, start_time, end_time });
-    // console.log({
-    //
-    // });
+    this.scheduleService
+      .createSchedule({
+        available_date: available,
+        start_time: start,
+        end_time: end,
+      })
+      .subscribe({
+        next: (schedule_data: Partial<Observable<ModelAppInterfaces.Schedule>>) => {
+          console.log(schedule_data);
+          // this.appoitmentService.createAppointement({
+          //        patient_id:this.patient_id(),
+          // doctor_id: this.doctor_id() || "",
+          // schedule_id:schedule_data.
+          // schedule_id: schedule_data.,
+          // patient_id: this.patient_id(),
+          // doctor_id: this.doctor_id(),
+          // })
+        },
+      });
   }
 }
