@@ -1,4 +1,7 @@
 export namespace ModelAppInterfaces {
+  interface ID {
+    id?: string;
+  }
   interface CreatedTime {
     createdAt?: Date;
     updatedAt?: Date;
@@ -24,14 +27,14 @@ export namespace ModelAppInterfaces {
     patient: Patient | null;
   }
 
-  export interface Patient {
+  export interface Patient extends ID, CreatedTime {
     profile_id: string;
   }
 
   export interface Doctor extends Patient {
-    specialty: string;
-    licenceNumber: number;
-    description: string;
+    specialty?: string;
+    licenceNumber?: number;
+    description?: string;
   }
 
   export interface Schedule {
@@ -48,10 +51,10 @@ export namespace ModelAppInterfaces {
     schedule_id: string;
   }
 
-  export interface Message extends CreatedTime {
+  export interface Message extends CreatedTime, ID {
     message: string;
-    doctor_id: string;
-    patient_id: string;
+    doctor_id?: string;
+    patient_id?: string;
   }
 
   export interface AiPrompt extends CreatedTime {
@@ -69,5 +72,9 @@ export namespace ModelHardCodedValues {
 
   export interface EnableProfilEditModel extends DataModel {
     data: any;
+  }
+
+  export interface EnableSendMessageModel extends DataModel {
+    data: ModelAppInterfaces.Message | null;
   }
 }

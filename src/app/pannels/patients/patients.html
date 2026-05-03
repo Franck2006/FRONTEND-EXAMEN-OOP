@@ -5,7 +5,7 @@
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
     <div
       class="relative bg-slate-800 md:h-100 h-auto border border-gray-500 rounded-2xl overflow-hidden snap-start"
-      *ngFor="let item of [7, 7, 7, 6, 5, 5, 4, 4, 6, 7]"
+      *ngFor="let patient of patients()"
     >
       <div class="w-full h-[45%]">
         <img
@@ -16,23 +16,29 @@
       </div>
       <div class="p-4 first-letter:uppercase space-y-4">
         <div>
-          <p class="first-letter:uppercase">doctor</p>
-          <p class="capitalize font-medium">franck amani</p>
+          <p class="first-letter:uppercase">patient</p>
+          <p class="capitalize text-slate-300 italic font-medium">
+            {{ patient.name }} {{ patient.lastname }}
+          </p>
         </div>
         <div>
-          <p class="first-letter:uppercase">temps</p>
-          <p class="capitalize font-medium">franck amani</p>
+          <p class="first-letter:uppercase">email</p>
+          <p class="capitalize text-slate-300 italic font-medium">
+            {{ patient.email }}
+          </p>
         </div>
         <div>
-          <p class="first-letter:uppercase">heure</p>
-          <p class="capitalize font-medium">franck amani</p>
+          <p class="first-letter:uppercase">phone</p>
+          <p class="capitalize text-slate-300 italic font-medium">
+            {{ patient.phone }}
+          </p>
         </div>
       </div>
       <div>
         <button
           class="absolute left-4 md:left-auto right-4 bottom-4 bg-blue-600 active:bg-blue-600 hover:bg-blue-700 transition-all rounded-full py-2 px-4"
         >
-          voir docteur detail
+          voir patient detail
         </button>
       </div>
     </div>

@@ -2,10 +2,58 @@
   (click)="dismiss_model(false)"
   class="bg-black/60 transition-all backdrop-blur-sm fixed inset-0 flex items-center justify-center space-y-3"
 >
-  <form action="" class="bg-slate-900 p-4 relative rounded-2xl" (click)="$event.stopPropagation()">
-    <button class="absolute right-2 top-2">&times;</button>
-    <div>
+  <form
+    action=""
+    class="bg-slate-900 p-4 relative rounded-2xl w-[90vw] md:w-120 space-y-4"
+    (click)="$event.stopPropagation()"
+    (ngSubmit)="onDoctorUpdate()"
+    [formGroup]="doctorData"
+  >
+    <button class="absolute right-2 top-2" type="button" (click)="dismiss_model(false)">
+      &times;
+    </button>
+    <div class="mt-4">
+      <p>descriprion</p>
+      <div class="w-full border border-gray-500 px-2 rounded-md py-1">
+        <textarea
+          type="text"
+          placeholder="descrition"
+          class="w-full h-full border-0 outline-0"
+          formControlName="description"
+        ></textarea>
+      </div>
       <!--  -->
+    </div>
+    <div>
+      <p>experience</p>
+      <div class="w-full border border-gray-500 px-2 py-1 rounded-md">
+        <textarea
+          type="text"
+          placeholder="experience"
+          class="w-full h-full border-0 outline-0"
+          formControlName="specialty"
+        ></textarea>
+      </div>
+      <!--  -->
+    </div>
+    <div>
+      <p>nbr de license</p>
+      <div class="w-full border border-gray-500 px-2 rounded-md py-1">
+        <input
+          type="text"
+          placeholder="nombre license"
+          class="w-full h-full"
+          formControlName="licenceNumber"
+        />
+      </div>
+      <!--  -->
+    </div>
+    <div class="w-full">
+      <button
+        class="w-full bg-blue-600 text-white py-2 rounded-2xl hover:bg-blue-700 active:bg-blue-600 transition-all"
+      >
+        mettre a jour
+      </button>
     </div>
   </form>
 </div>

@@ -25,4 +25,11 @@ export class EnablingModelHook {
   setEnableProfilEditModel(status: boolean, data: any) {
     this.subjectEnableProfilEditModel.next({ status, data });
   }
+
+  private subjectEnableSendMessageModel =
+    new BehaviorSubject<ModelHardCodedValues.EnableSendMessageModel>({ status: false, data: null });
+  EnableSendMessageModel = this.subjectEnableSendMessageModel.asObservable();
+  setEnableSendMessageModel(status: boolean, data: any) {
+    this.subjectEnableSendMessageModel.next({ status, data });
+  }
 }

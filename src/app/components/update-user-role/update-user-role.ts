@@ -3,6 +3,8 @@ import { EnablingModelHook } from '../../../hooks/enabling-models.hook';
 import { ModelHardCodedValues } from '../../../models/type.model';
 import { ProfileService } from '../../../services/profile.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { PatientService } from '../../../services/patient.service';
+import { DoctorService } from '../../../services/doctor.service';
 
 @Component({
   selector: 'app-update-user-role',
@@ -17,6 +19,8 @@ export class UpdateUserRole implements OnInit {
     private enablingModel: EnablingModelHook,
     private profile: ProfileService,
     private fromBuilder: FormBuilder,
+    private patientService: PatientService,
+    private doctorService: DoctorService,
   ) {
     this.roleData = this.fromBuilder.group({
       role: ['', [Validators.required]],
@@ -47,6 +51,25 @@ export class UpdateUserRole implements OnInit {
 
     this.profile.updateProfile({ role }, this.enable_data_store().profile.id).subscribe({
       next: (profile) => {
+        if (profile.role.toLowerCase() === 'patient') {
+          this.patientService.createpatient({ profile_id: profile.id }).subscribe({
+            next: () => {
+              console.log('patient created');
+            },
+            error: () => {
+              console.log('something went wrong on creating the patient');
+            },
+          });
+        } else if (profile.role.toLowerCase() === 'doctor') {
+          this.doctorService.createDotor({ profile_id: profile.id }).subscribe({
+            next: () => {
+              console.log('doctor created');
+            },
+            error: () => {
+              console.log('something went wrong on creating the doctor');
+            },
+          });
+        }
         this.dismiss_model(false);
       },
       error: (e) => {

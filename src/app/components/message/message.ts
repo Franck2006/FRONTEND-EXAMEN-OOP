@@ -1,0 +1,63 @@
+import { Component, OnInit, signal } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ModelAppInterfaces, ModelHardCodedValues } from '../../../models/type.model';
+import { MessageService } from '../../../services/message.service';
+import { EnablingModelHook } from '../../../hooks/enabling-models.hook';
+
+@Component({
+  selector: 'app-message',
+  imports: [ReactiveFormsModule],
+  templateUrl: './message.html',
+  styleUrl: './message.css',
+})
+export class Message implements OnInit {
+  message: FormGroup;
+  constructor(
+    private messageService: MessageService,
+    private formBuilder: FormBuilder,
+    private enablingModel: EnablingModelHook,
+  ) {
+    this.message = this.formBuilder.group({
+      message: ['', Validators.required],
+    });
+  }
+
+  ngOnInit(): void {
+    this.getMessageModelStatus();
+  }
+
+  sendMessageDoctor(doctor_id: string) {
+    const { message }: ModelAppInterfaces.Message = this.message.value;
+    const patient_id = localStorage.getItem('id') || '';
+
+    console.log('the id is: ' + patient_id);
+    console.log('the message is: ' + message);
+
+    this.messageService.createMessage({ message, doctor_id, patient_id }).subscribe({
+      next: (message) => {
+        console.log('message sent');
+        console.log(message);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  modelStatusDataStore = signal<ModelHardCodedValues.EnableSendMessageModel | any>({});
+  getMessageModelStatus() {
+    this.enablingModel.EnableSendMessageModel.subscribe({
+      next: ({ data }) => {
+        this.modelStatusDataStore.set(data);
+        console.log(data?.id);
+      },
+      error: (e) => {
+        console.log(e);
+      },
+    });
+  }
+
+  dismissMessageModel(status: boolean) {
+    this.enablingModel.setEnableSendMessageModel(status, null);
+  }
+}
