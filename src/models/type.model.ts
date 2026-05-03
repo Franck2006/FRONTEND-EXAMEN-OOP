@@ -42,8 +42,6 @@ export namespace ModelAppInterfaces {
     available_date: string;
     start_time: string;
     end_time: string;
-    appointment_id: string;
-    doctor_id: string;
   }
 
   export interface Appointement {
@@ -56,6 +54,7 @@ export namespace ModelAppInterfaces {
     message: string;
     doctor_id?: string;
     patient_id?: string;
+    patient?: Patient;
   }
 
   export interface AiPrompt extends CreatedTime {
