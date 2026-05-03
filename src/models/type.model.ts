@@ -35,6 +35,7 @@ export namespace ModelAppInterfaces {
     specialty?: string;
     licenceNumber?: number;
     description?: string;
+    profile?: Profile;
   }
 
   export interface Schedule {

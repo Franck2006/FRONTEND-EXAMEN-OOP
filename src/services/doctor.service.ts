@@ -21,7 +21,7 @@ export class DoctorService {
   }
 
   getAllDoctors() {
-    return this.http.get<ModelAppInterfaces.Doctor>(environment.API + '/doctor/get-all-doctors');
+    return this.http.get<ModelAppInterfaces.Doctor[]>(environment.API + '/doctor/get-all-doctors');
   }
 
   myDoctorProfile(id: string) {

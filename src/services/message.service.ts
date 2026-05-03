@@ -21,6 +21,10 @@ export class MessageService {
     return this.http.get(environment.API + `/message/get-message/${id}`);
   }
 
+  getOneMessageForDoctor(id: string | any) {
+    return this.http.get(environment.API + `/message/get-for-doctor/${id}`);
+  }
+
   updateMessage(message_data: any, id: string) {
     return this.http.patch(environment.API + `/message/update-message/${id}`, message_data);
   }
