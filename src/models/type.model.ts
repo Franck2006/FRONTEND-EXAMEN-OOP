@@ -38,13 +38,14 @@ export namespace ModelAppInterfaces {
     profile?: Profile;
   }
 
-  export interface Schedule {
+  export interface Schedule extends ID {
     available_date: string;
     start_time: string;
     end_time: string;
+    doctor_id: string;
   }
 
-  export interface Appointement {
+  export interface Appointement extends ID {
     patient_id: string;
     doctor_id: string;
     schedule_id: string;

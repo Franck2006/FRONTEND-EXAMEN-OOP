@@ -23,6 +23,7 @@ export class SchedulePannel implements OnInit {
     private fromBuilder: FormBuilder,
     private appoitmentService: AppointementService,
     private scheduleService: ScheduleService,
+    private appointment: AppointementService,
   ) {
     this.availabilityForm = this.fromBuilder.group({
       available_date: ['', Validators.required],
@@ -34,6 +35,8 @@ export class SchedulePannel implements OnInit {
   ngOnInit(): void {
     this.getAllSchedules();
     this.getAllPatientMessages();
+    this.getAllPatientMessages();
+    this.getAllDoctorAppointments();
   }
 
   public isInvalid(controlName: string): boolean {
@@ -71,11 +74,14 @@ export class SchedulePannel implements OnInit {
     });
   }
 
+  choosen_patient = signal<ModelAppInterfaces.Profile | null>(null);
   patient_id = signal<string>('');
   doctor_id = signal<string | undefined>('');
   schedule_id = signal<string | undefined>('');
-  setPatientSchedule(message: ModelAppInterfaces.Message) {
+  setPatientSchedule(message: ModelAppInterfaces.Message | any) {
     this.patient_id.set(message.patient?.id || '');
+
+    this.choosen_patient.set(message.patient.profile);
 
     this.doctorService.getAllDoctors().subscribe({
       next: (doctors: ModelAppInterfaces.Doctor[]) => {
@@ -99,19 +105,54 @@ export class SchedulePannel implements OnInit {
         available_date: available,
         start_time: start,
         end_time: end,
+        doctor_id: this.doctor_id() || '',
       })
       .subscribe({
-        next: (schedule_data: Partial<Observable<ModelAppInterfaces.Schedule>>) => {
+        next: (schedule_data: Partial<Observable<ModelAppInterfaces.Schedule>> | any) => {
           console.log(schedule_data);
-          // this.appoitmentService.createAppointement({
-          //        patient_id:this.patient_id(),
-          // doctor_id: this.doctor_id() || "",
-          // schedule_id:schedule_data.
-          // schedule_id: schedule_data.,
-          // patient_id: this.patient_id(),
-          // doctor_id: this.doctor_id(),
-          // })
+          this.appoitmentService
+            .createAppointement({
+              patient_id: this.patient_id(),
+              doctor_id: this.doctor_id() || '',
+              schedule_id: schedule_data.id,
+            })
+            .subscribe({
+              next: (appointment) => {
+                console.log(appointment);
+              },
+              error: (e) => console.log(e),
+            });
         },
       });
+  }
+
+  getAllDoctorAppointments() {
+    const profile_id = localStorage.getItem('id');
+
+    this.doctorService.getAllDoctors().subscribe({
+      next: (doctors: ModelAppInterfaces.Doctor[]) => {
+        const doctor = doctors.filter((doctor) => doctor?.profile?.id === profile_id);
+        this.doctor_id.set(doctor[0]?.id);
+
+        if (this.doctor_id()) {
+          this.appointment.getAllDoctorAppointments(doctor[0]?.id).subscribe({
+            next: (appointments) => {
+              console.log('==================================');
+              console.log(appointments);
+              console.log(profile_id);
+              console.log(doctor);
+              console.log('==================================');
+            },
+            error(err) {
+              console.log(err);
+            },
+          });
+        }
+      },
+      error: () => {
+        console.log(' someting went wrong ');
+      },
+    });
+    console.log(' this is the code of the doctor:    ' + this.doctor_id());
   }
 }
