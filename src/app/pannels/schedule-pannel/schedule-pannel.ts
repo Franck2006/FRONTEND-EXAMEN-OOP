@@ -57,9 +57,11 @@ export class SchedulePannel implements OnInit {
     });
   }
 
+  isGettingPatientsUserRequests = signal<boolean>(false);
   patientsUserRequests = signal<any>([]);
   profile_id = signal<string>(localStorage.getItem('id') || '');
   getAllPatientMessages() {
+    this.isGettingPatientsUserRequests.set(true);
     this.doctorService.getAllDoctors().subscribe({
       next: (doctors: ModelAppInterfaces.Doctor[]) => {
         const doctor = doctors.filter((doctor) => doctor?.profile?.id === this.profile_id());
@@ -68,11 +70,14 @@ export class SchedulePannel implements OnInit {
           next: (message: Partial<Observable<ModelAppInterfaces.Patient>>) => {
             console.log(message);
             this.patientsUserRequests.set(message);
+            this.isGettingPatientsUserRequests.set(false);
           },
         });
       },
       error: () => {
+        this.isGettingPatientsUserRequests.set(false);
         console.log(' someting went wrong ');
+        this.showSnackMsgBar('check your network', 'ok');
       },
     });
   }
@@ -138,9 +143,11 @@ export class SchedulePannel implements OnInit {
       });
   }
 
+  isLoadingDoctorAppointments = signal<boolean>(false);
   doctorAppointments = signal<ModelAppInterfaces.Appointement[]>([]);
   getAllDoctorAppointments() {
     const profile_id = localStorage.getItem('id');
+    this.isLoadingDoctorAppointments.set(true);
 
     this.doctorService.getAllDoctors().subscribe({
       next: (doctors: ModelAppInterfaces.Doctor[]) => {
@@ -155,9 +162,14 @@ export class SchedulePannel implements OnInit {
           this.appointment.getAllDoctorAppointments(doctor[0]?.id).subscribe({
             next: (appointments: Partial<ModelAppInterfaces.Appointement[]> | any) => {
               this.doctorAppointments.set(appointments);
+              this.isLoadingDoctorAppointments.set(false);
             },
-            error(err) {
-              console.log(err);
+            error: () => {
+              this.isLoadingDoctorAppointments.set(false);
+              this.showSnackMsgBar(
+                'someting went wrong on creating the appointment check your network ',
+                'ok',
+              );
             },
           });
         }
@@ -167,6 +179,24 @@ export class SchedulePannel implements OnInit {
       },
     });
     console.log(' this is the code of the doctor:    ' + this.doctor_id());
+  }
+
+  cancel_appointment(id: string | undefined) {
+    this.appoitmentService.deleteAppointement(id).subscribe({
+      next: () => {
+        this.showSnackMsgBar('the appoinment delete !!', 'ok');
+        this.getAllDoctorAppointments();
+      },
+      error: (e) => {
+        console.log(e);
+        this.showSnackMsgBar('something wen wrong on delete the appointment', 'ok');
+      },
+    });
+  }
+
+  isCancelAppointmentStatus = signal<boolean>(false);
+  closeModalCancelAppointment(isCancelAppointment: boolean) {
+    this.isCancelAppointmentStatus.set(isCancelAppointment);
   }
 
   showSnackMsgBar(msg: string, action: string) {

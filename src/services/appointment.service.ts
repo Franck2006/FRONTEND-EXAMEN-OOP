@@ -34,7 +34,7 @@ export class AppointementService {
     );
   }
 
-  deleteAppointement(id: string) {
-    return this.http.delete(environment.API + `/appointement/delete-delete-appointement/${id}`);
+  deleteAppointement(id: string | undefined) {
+    return this.http.delete(environment.API + `/appointement/delete-appointement/${id}`);
   }
 }
