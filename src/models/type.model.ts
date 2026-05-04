@@ -40,10 +40,10 @@ export namespace ModelAppInterfaces {
   }
 
   export interface Schedule extends ID {
-    available_date: string;
-    start_time: string;
-    end_time: string;
-    doctor_id: string;
+    available_date: string | undefined;
+    start_time: string | undefined;
+    end_time: string | undefined;
+    doctor_id?: string | undefined;
   }
 
   export interface Appointement extends ID {

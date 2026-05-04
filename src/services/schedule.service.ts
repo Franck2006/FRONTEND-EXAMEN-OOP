@@ -17,7 +17,7 @@ export class ScheduleService {
     return this.http.get(environment.API + `/schedule/get-schedule/${id}`);
   }
 
-  updateSchedule(schedule_data: ModelAppInterfaces.Schedule, id: string) {
+  updateSchedule(schedule_data: ModelAppInterfaces.Schedule, id: string | undefined) {
     return this.http.patch(environment.API + `/schedule/update-schedule/${id}`, schedule_data);
   }
 

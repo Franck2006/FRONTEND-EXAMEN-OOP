@@ -19,7 +19,6 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 export class SchedulePannel implements OnInit {
   availabilityForm: FormGroup;
   constructor(
-    private schedule: ScheduleService,
     private messageService: MessageService,
     private doctorService: DoctorService,
     private fromBuilder: FormBuilder,
@@ -49,7 +48,7 @@ export class SchedulePannel implements OnInit {
 
   allSchedules: ModelAppInterfaces.Schedule[] = [];
   getAllSchedules() {
-    this.schedule.getAllSchedules().subscribe({
+    this.scheduleService.getAllSchedules().subscribe({
       next: (schedules: any) => {},
       error: (error) => {
         console.log(' something went wrong !!!');
@@ -181,15 +180,40 @@ export class SchedulePannel implements OnInit {
     console.log(' this is the code of the doctor:    ' + this.doctor_id());
   }
 
+  updateAppointment(appointment: ModelAppInterfaces.Appointement) {
+    const available_date = appointment.schedule?.available_date;
+    const start_time = appointment.schedule?.start_time;
+    const end_time = appointment.schedule?.end_time;
+    const id = appointment.schedule?.id;
+
+    this.scheduleService
+      .updateSchedule(
+        {
+          available_date,
+          start_time,
+          end_time,
+        },
+        id,
+      )
+      .subscribe({
+        next: () => {
+          console.log('');
+        },
+        error(err) {},
+      });
+  }
+
   cancel_appointment(id: string | undefined) {
     this.appoitmentService.deleteAppointement(id).subscribe({
       next: () => {
         this.showSnackMsgBar('the appoinment delete !!', 'ok');
         this.getAllDoctorAppointments();
+        this.closeModalCancelAppointment(false);
       },
       error: (e) => {
         console.log(e);
         this.showSnackMsgBar('something wen wrong on delete the appointment', 'ok');
+        this.closeModalCancelAppointment(false);
       },
     });
   }
