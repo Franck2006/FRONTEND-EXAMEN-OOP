@@ -1,15 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import {  RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import type { ModelAppInterfaces } from '../../../models/type.model'
+import type { ModelAppInterfaces } from '../../../models/type.model';
 import { CommonModule } from '@angular/common';
 import { ProfileService } from '../../../services/profile.service';
 import { SetPageByRoleHook } from '../../../hooks/set-page-by-role.hook';
-// import { getPageByRole } from '../../../hooks/set-page-by-role.hook';
-
 
 @Component({
   selector: 'app-sign-up',
@@ -18,49 +16,46 @@ import { SetPageByRoleHook } from '../../../hooks/set-page-by-role.hook';
     MatSnackBarModule,
     RouterLink,
     MatProgressSpinnerModule,
-    CommonModule
-],
+    CommonModule,
+  ],
   templateUrl: './sign-up.html',
   styleUrl: './sign-up.css',
 })
 export class SignUp {
-
-  signUpForm: FormGroup
+  signUpForm: FormGroup;
 
   constructor(
     private authService: AuthService,
     private profileService: ProfileService,
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
-    private setPageByRoleHook: SetPageByRoleHook
+    private setPageByRoleHook: SetPageByRoleHook,
   ) {
     this.signUpForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       lastname: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      phone: ['']
-    })
+      phone: [''],
+    });
   }
 
-  isLoading: boolean = false;
+  isLoading = signal<boolean>(false);
   onUsesrSignUp() {
-
     if (!this.signUpForm.valid) return;
 
     Promise.resolve().then(() => {
-      this.isLoading = true;
+      this.isLoading.set(true);
     });
 
     if (this.signUpForm.valid) {
-      const { name, lastname, email, password, phone } : ModelAppInterfaces.SignUp = this.signUpForm.value
-      this.authService.sign_up({name, lastname, email, password, phone }).subscribe({
+      const { name, lastname, email, password, phone }: ModelAppInterfaces.SignUp =
+        this.signUpForm.value;
+      this.authService.sign_up({ name, lastname, email, password, phone }).subscribe({
         next: (response: any) => {
           this.showSnackMsgBar('Sign-up successful!', 'OK');
-          this.isLoading = false;
+          this.isLoading.set(false);
           this.clearForm();
-          
-          
 
           const id = response.user.id;
 
@@ -72,20 +67,18 @@ export class SignUp {
             },
             error: (error) => {
               console.log('Error fetching profile data:', error);
-            }
+            },
           });
         },
         error: (error) => {
           this.showSnackMsgBar('Sign-up failed!', 'Retry');
-          this.isLoading = false;
+          this.isLoading.set(false);
           console.log('Sign-up error:', error.message);
-        }
+        },
       });
+    } else {
     }
-    else { }
   }
-
- 
 
   clearForm() {
     this.signUpForm.reset();

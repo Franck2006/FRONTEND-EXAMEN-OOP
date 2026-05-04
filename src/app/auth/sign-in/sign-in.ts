@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
@@ -29,14 +29,14 @@ export class SignIn {
     });
   }
 
-  isLoading: boolean = false;
+  isLoading = signal<boolean>(false);
   onUserSignIn() {
-    this.isLoading = true;
+    this.isLoading.set(true);
     if (this.signInForm.valid) {
       const { email, password } = this.signInForm.value;
       this.authService.sign_in({ email, password }).subscribe({
         next: (response: any) => {
-          this.isLoading = false;
+          this.isLoading.set(false);
           this.showSnackMsgBar('Sign-in successful!', 'OK');
 
           const id = response.user.id;
@@ -53,7 +53,7 @@ export class SignIn {
           });
         },
         error: (error) => {
-          this.isLoading = false;
+          this.isLoading.set(false);
           this.showSnackMsgBar('Sign-in failed!', 'Retry');
         },
       });

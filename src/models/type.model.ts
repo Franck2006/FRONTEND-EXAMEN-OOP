@@ -29,6 +29,7 @@ export namespace ModelAppInterfaces {
 
   export interface Patient extends ID, CreatedTime {
     profile_id: string;
+    profile?: Profile;
   }
 
   export interface Doctor extends Patient {
@@ -49,6 +50,9 @@ export namespace ModelAppInterfaces {
     patient_id: string;
     doctor_id: string;
     schedule_id: string;
+    patient?: Patient;
+    doctor?: Doctor;
+    schedule?: Schedule;
   }
 
   export interface Message extends CreatedTime, ID {

@@ -7,10 +7,12 @@ import { DoctorService } from '../../../services/doctor.service';
 import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AppointementService } from '../../../services/appointment.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-schedule-pannel',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, MatProgressSpinnerModule],
   templateUrl: './schedule-pannel.html',
   styleUrl: './schedule-pannel.css',
 })
@@ -24,6 +26,7 @@ export class SchedulePannel implements OnInit {
     private appoitmentService: AppointementService,
     private scheduleService: ScheduleService,
     private appointment: AppointementService,
+    private snackBar: MatSnackBar,
   ) {
     this.availabilityForm = this.fromBuilder.group({
       available_date: ['', Validators.required],
@@ -94,7 +97,9 @@ export class SchedulePannel implements OnInit {
     });
   }
 
+  submittingAppoint = signal<boolean>(false);
   onAppointmenetSubmit() {
+    this.submittingAppoint.set(true);
     const { available_date, start_time, end_time } = this.availabilityForm.value;
     const available = new Date(available_date).toISOString();
     const start = new Date(`${available_date}T${start_time}:00`).toISOString();
@@ -118,14 +123,22 @@ export class SchedulePannel implements OnInit {
             })
             .subscribe({
               next: (appointment) => {
-                console.log(appointment);
+                this.getAllDoctorAppointments();
+                this.submittingAppoint.set(false);
+                this.showSnackMsgBar('you have made the appointment, check onto the table', 'ok');
               },
-              error: (e) => console.log(e),
+              error: (e) => {
+                this.showSnackMsgBar(
+                  'someting went wrong on creating the appointment check your network ',
+                  'ok',
+                );
+              },
             });
         },
       });
   }
 
+  doctorAppointments = signal<ModelAppInterfaces.Appointement[]>([]);
   getAllDoctorAppointments() {
     const profile_id = localStorage.getItem('id');
 
@@ -134,14 +147,14 @@ export class SchedulePannel implements OnInit {
         const doctor = doctors.filter((doctor) => doctor?.profile?.id === profile_id);
         this.doctor_id.set(doctor[0]?.id);
 
+        console.log('the doctor is: ');
+        console.log(doctor);
+        console.log('the doctor is: ');
+
         if (this.doctor_id()) {
           this.appointment.getAllDoctorAppointments(doctor[0]?.id).subscribe({
-            next: (appointments) => {
-              console.log('==================================');
-              console.log(appointments);
-              console.log(profile_id);
-              console.log(doctor);
-              console.log('==================================');
+            next: (appointments: Partial<ModelAppInterfaces.Appointement[]> | any) => {
+              this.doctorAppointments.set(appointments);
             },
             error(err) {
               console.log(err);
@@ -154,5 +167,15 @@ export class SchedulePannel implements OnInit {
       },
     });
     console.log(' this is the code of the doctor:    ' + this.doctor_id());
+  }
+
+  showSnackMsgBar(msg: string, action: string) {
+    const snackBarRef = this.snackBar.open(msg, action, { duration: 3000 });
+    snackBarRef.afterDismissed().subscribe(() => {
+      console.log(' this is the atttt');
+    });
+    snackBarRef.onAction().subscribe(() => {
+      console.log(' this is the action');
+    });
   }
 }

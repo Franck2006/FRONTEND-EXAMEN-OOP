@@ -117,13 +117,23 @@
 
       <!-- Submit Button -->
       <div class="mt-4">
-        <button
-          type="submit"
-          [disabled]="availabilityForm.invalid"
-          class="bg-blue-600 hover:bg-blue-700 disabled:bg-slate-600 disabled:text-gray-400 disabled:cursor-not-allowed transition-all text-white font-bold w-full py-3 rounded-full shadow-lg"
-        >
-          Enregistrer
-        </button>
+        @if (submittingAppoint()) {
+          <button
+            type="button"
+            [disabled]="availabilityForm.invalid"
+            class="bg-slate-600 self-center transition-all text-gray-400 font-bold w-full cursor-not-allowed py-3 rounded-full shadow-lg"
+          >
+            creating appointment
+          </button>
+        } @else {
+          <button
+            type="submit"
+            [disabled]="availabilityForm.invalid"
+            class="bg-blue-600 hover:bg-blue-700 disabled:bg-slate-600 disabled:text-gray-400 disabled:cursor-not-allowed transition-all text-white font-bold w-full py-3 rounded-full shadow-lg"
+          >
+            Enregistrer
+          </button>
+        }
       </div>
     </div>
   </form>
@@ -137,49 +147,70 @@
     <div class="h-[90%] custom-scroll overflow-y-auto snap-y snap-proximity space-y-4 pb-20">
       <div
         *ngFor="let message of patientsUserRequests()"
-        class="w-full border gap-8 md:gap-0 border-gray-500 p-2 rounded-2xl md:rounded-full flex flex-col md:flex-row md:justify-between items-center"
+        class="w-full border border-slate-700 bg-slate-800/50 hover:bg-slate-800 p-3 mb-4 rounded-2xl md:rounded-full flex flex-col md:flex-row md:justify-between items-center transition-all duration-300 shadow-lg"
       >
-        <div class="flex gap-2">
-          <div
-            class="w-16 h-16 rounded-full border-gray-500 border-2 border-dotted overflow-hidden"
-          >
-            @if (true) {
-              <div
-                class="text-2xl font-bold text-slate-400 h-full w-full flex items-center justify-center bg-slate-900"
-              >
-                <p class="uppercase">
-                  {{ message.patient.profile.name.slice(0, 1) }}
-                  {{ message.patient.profile.lastname.slice(0, 1) }}
-                </p>
-              </div>
-            } @else {
-              <img
-                src="https://i.pinimg.com/1200x/3e/f3/50/3ef350dc86cc82a092463e5d795654b5.jpg"
-                alt=""
-                class="w-full h-full"
-              />
-            }
+        <div class="flex items-center gap-4 w-full px-2">
+          <!-- Avatar Section -->
+          <div class="relative shrink-0">
+            <div
+              class="w-14 h-14 rounded-full border-2 border-dashed border-slate-600 overflow-hidden bg-slate-900 flex items-center justify-center"
+            >
+              @if (true) {
+                <div class="text-xl font-bold text-emerald-400">
+                  <p class="uppercase tracking-widest">
+                    {{ message.patient.profile.name.slice(0, 1) }}
+                    {{ message.patient.profile.lastname.slice(0, 1) }}
+                  </p>
+                </div>
+              } @else {
+                <img
+                  src="https://i.pinimg.com/1200x/3e/f3/50/3ef350dc86cc82a092463e5d795654b5.jpg"
+                  alt="profile"
+                  class="w-full h-full object-cover"
+                />
+              }
+            </div>
+            <!-- Decorative Status Dot -->
+            <span
+              class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 border-2 border-slate-800 rounded-full"
+            ></span>
           </div>
-          <div>
-            <p class="font-bold">
-              {{ message.patient.profile.name }}
-              {{ message.patient.profile.lastname }}
+
+          <!-- Content Section -->
+          <div class="flex flex-col min-w-0">
+            <p class="font-bold text-slate-100 text-lg leading-tight">
+              {{ message.patient.profile.name }} {{ message.patient.profile.lastname }}
             </p>
-            <p class="italic text-slate-200">{{ message.message }} ...</p>
+            <p class="italic text-slate-400 text-sm truncate max-w-[200px] md:max-w-md">
+              "{{ message.message }}..."
+            </p>
           </div>
         </div>
-        <div class="flex flex-col md:flex-row w-full md:w-auto items-center gap-2">
-          <button class="border border-gray-500 rounded-full px-4 py-2 w-full md:w-auto">
-            lire
+
+        <!-- Action Buttons -->
+        <div
+          class="flex flex-col md:flex-row w-full md:w-auto items-center gap-2 mt-4 md:mt-0 px-2 md:pr-4"
+        >
+          <!-- Read Button -->
+          <button
+            class="text-sm font-semibold border border-slate-600 text-slate-300 rounded-full px-5 py-2 w-full md:w-auto hover:bg-slate-700 hover:text-white transition-colors"
+          >
+            Lire
           </button>
+
+          <!-- Approve Button (Primary) -->
           <button
             (click)="setPatientSchedule(message)"
-            class="border border-gray-500 rounded-full px-4 py-2 w-full md:w-auto"
+            class="text-sm font-semibold bg-emerald-600 text-white rounded-full px-6 py-2 w-full md:w-auto hover:bg-emerald-500 hover:shadow-[0_0_15px_rgba(16,185,129,0.3)] transition-all active:scale-95"
           >
-            approver rendez-vous
+            Approuver
           </button>
-          <button class="border border-gray-500 rounded-full px-4 py-2 w-full md:w-auto">
-            repondre
+
+          <!-- Reply Button -->
+          <button
+            class="text-sm font-semibold border border-blue-500/40 text-blue-400 rounded-full px-5 py-2 w-full md:w-auto hover:bg-blue-500/10 hover:border-blue-400 transition-colors"
+          >
+            Répondre
           </button>
         </div>
       </div>
@@ -193,28 +224,65 @@
       <p class="capitalize text-xl font-medium">mes rendez-vous avec les patient</p>
     </div>
 
-    <div class="w-full h-[85%] custom-scroll overflow-y-auto snap-y snap-proximity pb-20">
-      <table class="w-full text-start border border-white snap-start">
-        <thead class="bg-slate-900 border border-gray-500 sticky">
-          <th class="text-start px-4 py-2 capitalize">name</th>
-          <th class="text-start px-4 py-2 capitalize">lasthname</th>
-          <th class="text-start px-4 py-2 capitalize">date</th>
-          <th class="text-start px-4 py-2 capitalize">heure</th>
-          <th class="text-start px-4 py-2 capitalize">email</th>
-          <th class="text-start px-4 py-2 capitalize">rendez-vous</th>
+    <div
+      class="w-full h-[85%] custom-scroll overflow-y-auto snap-y snap-proximity pb-20 rounded-lg shadow-xl"
+    >
+      <table class="w-full text-left border-collapse snap-start text-slate-200">
+        <!-- Header: Darker with bold text -->
+        <thead
+          class="bg-slate-950 text-slate-400 sticky top-0 z-10 uppercase text-xs tracking-wider"
+        >
+          <tr>
+            <th class="px-6 py-4 font-semibold border-b border-slate-700">Name</th>
+            <th class="px-6 py-4 font-semibold border-b border-slate-700">Lastname</th>
+            <th class="px-6 py-4 font-semibold border-b border-slate-700">Date</th>
+            <th class="px-6 py-4 font-semibold border-b border-slate-700">Heure</th>
+            <th class="px-6 py-4 font-semibold border-b border-slate-700">Email</th>
+            <th class="px-6 py-4 font-semibold border-b border-slate-700 text-center">Actions</th>
+          </tr>
         </thead>
-        <tbody class=" ">
+
+        <tbody class="bg-slate-800">
           <tr
-            class="border border-gray-500"
-            *ngFor="let item of [4, 4, 5, 4, 5, 6, 5, 4, 4, 5, 6, 4, 4, 5]"
+            *ngFor="let appointment of doctorAppointments()"
+            class="border-b border-slate-700 hover:bg-slate-700/50 transition-colors even:bg-slate-800/50 odd:bg-slate-800"
           >
-            <td class="text-start px-4 py-2 capitalize">Franck</td>
-            <td class="text-start px-4 py-2 capitalize">Amani</td>
-            <td class="text-start px-4 py-2 capitalize">2020-10-10</td>
-            <td class="text-start px-4 py-2 capitalize">10:10</td>
-            <td class="text-start px-4 py-2 capitalize">franck@gmail.com</td>
-            <td class="text-start px-4 py-2 capitalize">
-              <button class="border border-gray-500 w-full rounded-full">fait</button>
+            <td class="px-6 py-4 whitespace-nowrap capitalize">
+              {{ appointment.patient?.profile?.name }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap capitalize">
+              {{ appointment.patient?.profile?.lastname }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              {{ appointment.schedule?.available_date | date: 'mediumDate' }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap font-mono text-emerald-400">
+              {{ appointment.schedule?.start_time | date: 'shortTime' }}
+            </td>
+            <td class="px-6 py-4 lowercase text-slate-400">
+              {{ appointment.patient?.profile?.email }}
+            </td>
+            <td class="px-6 py-4">
+              <div class="flex items-center justify-center gap-2">
+                <!-- Fait (Done) -->
+                <button
+                  class="px-3 py-1 text-xs font-medium rounded-md bg-emerald-600/20 text-emerald-400 border border-emerald-600/50 hover:bg-emerald-600 hover:text-white transition-all"
+                >
+                  Fait
+                </button>
+                <!-- Modifier (Edit) -->
+                <button
+                  class="px-3 py-1 text-xs font-medium rounded-md bg-blue-600/20 text-blue-400 border border-blue-600/50 hover:bg-blue-600 hover:text-white transition-all"
+                >
+                  Modifier
+                </button>
+                <!-- Annuler (Cancel) -->
+                <button
+                  class="px-3 py-1 text-xs font-medium rounded-md bg-rose-600/20 text-rose-400 border border-rose-600/50 hover:bg-rose-600 hover:text-white transition-all"
+                >
+                  Annuler
+                </button>
+              </div>
             </td>
           </tr>
         </tbody>
