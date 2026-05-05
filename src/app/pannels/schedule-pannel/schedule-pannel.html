@@ -348,11 +348,12 @@
                     Fait
                   </button>
                   <button
-                    (click)="updateAppointment(appointment)"
+                    (click)="openAndsetPatientUpdateAppointmentdata(appointment)"
                     class="px-3 py-1 text-xs font-medium rounded-md bg-blue-600/20 text-blue-400 border border-blue-600/50 hover:bg-blue-600 hover:text-white transition-all"
                   >
                     Modifier
                   </button>
+
                   <button
                     class="px-3 py-1 text-xs font-medium rounded-md bg-rose-600/20 text-rose-400 border border-rose-600/50 hover:bg-rose-600 hover:text-white transition-all"
                     (click)="closeModalCancelAppointment(true)"
@@ -374,6 +375,8 @@
     </div>
   </div>
 </div>
+
+<!-- this is the the  isCancelAppointmentStatus model -->
 
 @if (isCancelAppointmentStatus()) {
   <div
@@ -426,5 +429,15 @@
         </label>
       </div>
     </div>
+  </div>
+}
+
+<!-- this is the model of updating the user schedule -->
+@if (isUpdatingAppointmentOpened()) {
+  <div
+    (click)="closePatientUpdateAppointmentdata()"
+    class="bg-black/60 transition-all backdrop-blur-sm fixed inset-0 flex items-center justify-center z-50 space-y-3"
+  >
+    <app-updating-patient-schedule />
   </div>
 }

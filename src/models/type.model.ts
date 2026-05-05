@@ -44,6 +44,7 @@ export namespace ModelAppInterfaces {
     start_time: string | undefined;
     end_time: string | undefined;
     doctor_id?: string | undefined;
+    message?: Message | null;
   }
 
   export interface Appointement extends ID {
@@ -81,6 +82,11 @@ export namespace ModelHardCodedValues {
 
   export interface EnableSendMessageModel extends DataModel {
     data: ModelAppInterfaces.Message | null;
+    patient: ModelAppInterfaces.Patient | null;
+  }
+
+  export interface EnableUpdateUserAppointmentModel extends DataModel {
+    schedule: ModelAppInterfaces.Schedule | null;
     patient: ModelAppInterfaces.Patient | null;
   }
 }

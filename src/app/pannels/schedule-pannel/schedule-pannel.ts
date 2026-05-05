@@ -4,15 +4,17 @@ import { CommonModule } from '@angular/common';
 import { ModelAppInterfaces } from '../../../models/type.model';
 import { MessageService } from '../../../services/message.service';
 import { DoctorService } from '../../../services/doctor.service';
-import { Observable } from 'rxjs';
+import { Observable, single } from 'rxjs';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AppointementService } from '../../../services/appointment.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { UpdatingPatientSchedule } from '../../components/updating-patient-schedule/updating-patient-schedule';
+import { EnablingModelHook } from '../../../hooks/enabling-models.hook';
 
 @Component({
   selector: 'app-schedule-pannel',
-  imports: [CommonModule, ReactiveFormsModule, MatProgressSpinnerModule],
+  imports: [CommonModule, ReactiveFormsModule, MatProgressSpinnerModule, UpdatingPatientSchedule],
   templateUrl: './schedule-pannel.html',
   styleUrl: './schedule-pannel.css',
 })
@@ -26,6 +28,7 @@ export class SchedulePannel implements OnInit {
     private scheduleService: ScheduleService,
     private appointment: AppointementService,
     private snackBar: MatSnackBar,
+    private enablingModel: EnablingModelHook,
   ) {
     this.availabilityForm = this.fromBuilder.group({
       available_date: ['', Validators.required],
@@ -39,6 +42,7 @@ export class SchedulePannel implements OnInit {
     this.getAllPatientMessages();
     this.getAllPatientMessages();
     this.getAllDoctorAppointments();
+    this.getPatientUpdateAppointmentdata();
   }
 
   public isInvalid(controlName: string): boolean {
@@ -180,27 +184,27 @@ export class SchedulePannel implements OnInit {
     console.log(' this is the code of the doctor:    ' + this.doctor_id());
   }
 
-  updateAppointment(appointment: ModelAppInterfaces.Appointement) {
-    const available_date = appointment.schedule?.available_date;
-    const start_time = appointment.schedule?.start_time;
-    const end_time = appointment.schedule?.end_time;
-    const id = appointment.schedule?.id;
+  isUpdatingAppointmentOpened = signal<boolean>(false);
+  getPatientUpdateAppointmentdata() {
+    this.enablingModel.EnableUpdateUserAppointmentModel.subscribe({
+      next: (updateParientAppointment) => {
+        this.isUpdatingAppointmentOpened.set(updateParientAppointment.status);
+        // console.log(updateParientAppointment.patient);
+        // console.log(updateParientAppointment.data);
+      },
+    });
+  }
 
-    this.scheduleService
-      .updateSchedule(
-        {
-          available_date,
-          start_time,
-          end_time,
-        },
-        id,
-      )
-      .subscribe({
-        next: () => {
-          console.log('');
-        },
-        error(err) {},
-      });
+  openAndsetPatientUpdateAppointmentdata(appointment: ModelAppInterfaces.Appointement) {
+    this.enablingModel.setEnableUpdateUserAppointmentModel(
+      true,
+      appointment.schedule as ModelAppInterfaces.Schedule | undefined,
+      appointment.patient as ModelAppInterfaces.Patient | undefined,
+    );
+  }
+
+  closePatientUpdateAppointmentdata() {
+    this.enablingModel.setEnableUpdateUserAppointmentModel(false, null, null);
   }
 
   cancel_appointment(id: string | undefined) {

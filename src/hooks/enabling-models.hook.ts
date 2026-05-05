@@ -36,4 +36,15 @@ export class EnablingModelHook {
   setEnableSendMessageModel(status: boolean, data: any, patient: any) {
     this.subjectEnableSendMessageModel.next({ status, data, patient });
   }
+
+  private subjectEnableUpdateUserAppointmentModel =
+    new BehaviorSubject<ModelHardCodedValues.EnableUpdateUserAppointmentModel>({
+      status: false,
+      schedule: null,
+      patient: null,
+    });
+  EnableUpdateUserAppointmentModel = this.subjectEnableUpdateUserAppointmentModel.asObservable();
+  setEnableUpdateUserAppointmentModel(status: boolean, schedule: any, patient: any) {
+    this.subjectEnableUpdateUserAppointmentModel.next({ status, schedule, patient });
+  }
 }
