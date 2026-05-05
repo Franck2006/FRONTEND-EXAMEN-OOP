@@ -1,4 +1,4 @@
-<div class="bg-slate-800 rounded-2xl h-full p-4 text-white flex flex-col gap-8 relative">
+<div class="bg-slate-800 md:rounded-2xl h-full p-4 text-white flex flex-col gap-8 relative">
   <div class="flex gap-2">
     <div
       class="h-12 w-12 flex items-center justify-center border border-gray-500 cursor-pointer rounded-2xl"
@@ -24,10 +24,19 @@
     </div>
   </div>
 
+  <button
+    (click)="closeLeftBar()"
+    class="absolute right-4 top-4 md:hidden bg-gray-500 rounded-full flex items-center justify-center h-10 w-10"
+  >
+    <p>&times;</p>
+  </button>
+
   <div>
     <!-- these are the navigation items -->
     <div
       (click)="selectSelectedPannel('dashboard')"
+      (click)="closeLeftBar()"
+      [ngClass]="activeSelectedPannel() === 'dashboard' ? 'bg-slate-700' : ''"
       class="flex items-center cursor-pointer gap-2 hover:bg-slate-700 rounded-full p-1 pr-4 select-none"
     >
       <div class="w-10 h-10 flex items-center justify-center rounded-full bg-green-800">
@@ -52,6 +61,8 @@
     @if (role === 'PATIENT') {
       <div
         (click)="selectSelectedPannel('appointements')"
+        (click)="closeLeftBar()"
+        [ngClass]="activeSelectedPannel() === 'appointements' ? 'bg-slate-700' : ''"
         class="flex items-center cursor-pointer gap-2 hover:bg-slate-700 rounded-full p-1 pr-4 select-none"
       >
         <div class="w-10 h-10 flex items-center justify-center rounded-full bg-green-800">
@@ -77,6 +88,8 @@
     @if (role === 'DOCTOR') {
       <div
         (click)="selectSelectedPannel('set-appointement')"
+        (click)="closeLeftBar()"
+        [ngClass]="activeSelectedPannel() === 'set-appointement' ? 'bg-slate-700' : ''"
         class="flex items-center cursor-pointer gap-2 hover:bg-slate-700 rounded-full p-1 pr-4 select-none"
       >
         <div class="w-10 h-10 flex items-center justify-center rounded-full bg-green-800">
@@ -98,8 +111,11 @@
         <div class="cursor-pointer">faire rendez-vous</div>
       </div>
     }
+
     <div
       (click)="selectSelectedPannel('history')"
+      (click)="closeLeftBar()"
+      [ngClass]="activeSelectedPannel() === 'history' ? 'bg-slate-700' : ''"
       class="flex items-center cursor-pointer gap-2 hover:bg-slate-700 rounded-full p-1 pr-4 select-none"
     >
       <div class="w-10 h-10 flex items-center justify-center rounded-full bg-green-800">
@@ -123,6 +139,8 @@
 
     <div
       (click)="selectSelectedPannel('doctors')"
+      (click)="closeLeftBar()"
+      [ngClass]="activeSelectedPannel() === 'doctors' ? 'bg-slate-700' : ''"
       class="flex items-center cursor-pointer gap-2 hover:bg-slate-700 rounded-full p-1 pr-4 select-none"
     >
       <div class="w-10 h-10 flex items-center justify-center rounded-full bg-green-800">
@@ -147,6 +165,8 @@
     @if (role === 'DOCTOR') {
       <div
         (click)="selectSelectedPannel('patients')"
+        (click)="closeLeftBar()"
+        [ngClass]="activeSelectedPannel() === 'patients' ? 'bg-slate-700' : ''"
         class="flex items-center cursor-pointer gap-2 hover:bg-slate-700 rounded-full p-1 pr-4 select-none"
       >
         <div class="w-10 h-10 flex items-center justify-center rounded-full bg-green-800">
@@ -172,6 +192,8 @@
     @if (role === 'SUPER_ADMIN') {
       <div
         (click)="selectSelectedPannel('users')"
+        (click)="closeLeftBar()"
+        [ngClass]="activeSelectedPannel() === 'users' ? 'bg-slate-700' : ''"
         class="flex items-center cursor-pointer gap-2 hover:bg-slate-700 rounded-full p-1 pr-4 select-none"
       >
         <div class="w-10 h-10 flex items-center justify-center rounded-full bg-green-800">
@@ -196,6 +218,8 @@
 
     <div
       (click)="selectSelectedPannel('profile')"
+      (click)="closeLeftBar()"
+      [ngClass]="activeSelectedPannel() === 'profile' ? 'bg-slate-700' : ''"
       class="flex items-center cursor-pointer gap-2 hover:bg-slate-700 rounded-full p-1 pr-4 select-none"
     >
       <div class="w-10 h-10 flex items-center justify-center rounded-full bg-green-800">

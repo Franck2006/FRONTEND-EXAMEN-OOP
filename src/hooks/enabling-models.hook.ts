@@ -47,4 +47,19 @@ export class EnablingModelHook {
   setEnableUpdateUserAppointmentModel(status: boolean, schedule: any, patient: any) {
     this.subjectEnableUpdateUserAppointmentModel.next({ status, schedule, patient });
   }
+
+  private subjectDoctorDetailsModel = new BehaviorSubject<ModelHardCodedValues.DoctorDetailsModel>({
+    status: false,
+    doctor: null,
+  });
+  DoctorDetailsModel = this.subjectDoctorDetailsModel.asObservable();
+  setDoctorDetailsModel(status: boolean, doctor: ModelAppInterfaces.Profile | null) {
+    this.subjectDoctorDetailsModel.next({ status, doctor });
+  }
+
+  private subjectLeftBarModel = new BehaviorSubject<boolean>(false);
+  leftBarModel = this.subjectLeftBarModel.asObservable();
+  setLeftBarModel(status: boolean) {
+    this.subjectLeftBarModel.next(status);
+  }
 }

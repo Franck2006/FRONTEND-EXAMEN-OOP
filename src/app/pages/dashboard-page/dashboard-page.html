@@ -1,11 +1,11 @@
-<div class=" grid grid-rows-[auto_1fr] h-screen p-4 bg-slate-950 gap-4">
-    <app-nav-bar/>
-    <div class="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-4 ">
-        <div class="hidden md:flex">
-            <app-left-bar/>
-        </div>
-        <div>
-            <app-content-pannel/>
-        </div>
+<div class="grid grid-rows-[auto_1fr] h-screen p-4 bg-slate-950 gap-4">
+  <app-nav-bar />
+  <div class="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-4">
+    <div class="md:flex" [ngClass]="isLeftBarOpen() ? 'fixed inset-0 z-50 md:static ' : 'hidden'">
+      <app-left-bar />
     </div>
+    <div>
+      <app-content-pannel />
+    </div>
+  </div>
 </div>

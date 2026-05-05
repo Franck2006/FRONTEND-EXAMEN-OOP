@@ -89,4 +89,8 @@ export namespace ModelHardCodedValues {
     schedule: ModelAppInterfaces.Schedule | null;
     patient: ModelAppInterfaces.Patient | null;
   }
+
+  export interface DoctorDetailsModel extends DataModel {
+    doctor: ModelAppInterfaces.Profile | null;
+  }
 }

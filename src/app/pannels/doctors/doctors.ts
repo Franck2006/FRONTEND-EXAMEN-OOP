@@ -5,23 +5,25 @@ import { ModelAppInterfaces } from '../../../models/type.model';
 import { Message } from '../../components/message/message';
 import { EnablingModelHook } from '../../../hooks/enabling-models.hook';
 import { CommonPreloader } from '../../shared/common-preloader/common-preloader';
+import { DoctorDetails } from '../../components/doctor-details/doctor-details';
 
 @Component({
   selector: 'app-doctors',
-  imports: [CommonModule, Message, CommonPreloader],
+  imports: [CommonModule, Message, CommonPreloader, DoctorDetails],
   templateUrl: './doctors.html',
   styleUrl: './doctors.css',
 })
 export class Doctors implements OnInit {
   constructor(
     private profile: ProfileService,
-    private enablingModel: EnablingModelHook,
+    private enablingModelHook: EnablingModelHook,
   ) {}
 
   ngOnInit(): void {
     this.getAllDoctors();
     this.getAllPatients();
     this.getMessageModelStatus();
+    this.getDoctorModelData();
   }
 
   doctors = signal<ModelAppInterfaces.Profile[]>([]);
@@ -41,7 +43,7 @@ export class Doctors implements OnInit {
 
   modelStatus = signal<boolean>(false);
   getMessageModelStatus() {
-    this.enablingModel.EnableSendMessageModel.subscribe(({ status }) => {
+    this.enablingModelHook.EnableSendMessageModel.subscribe(({ status }) => {
       this.modelStatus.set(status);
     });
   }
@@ -54,7 +56,20 @@ export class Doctors implements OnInit {
 
     const { patient } = profile[0];
 
-    this.enablingModel.setEnableSendMessageModel(status, doctor, patient);
+    this.enablingModelHook.setEnableSendMessageModel(status, doctor, patient);
+  }
+
+  seeDoctorDetails(doctor: ModelAppInterfaces.Profile | null) {
+    this.enablingModelHook.setDoctorDetailsModel(true, doctor);
+  }
+
+  doctorModelStatus = signal<boolean>(false);
+  getDoctorModelData() {
+    this.enablingModelHook.DoctorDetailsModel.subscribe(
+      (data: Partial<ModelAppInterfaces.Doctor[] | null> | any) => {
+        this.doctorModelStatus.set(data.status);
+      },
+    );
   }
 
   profiles = signal<ModelAppInterfaces.Profile[]>([]);

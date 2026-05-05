@@ -24,20 +24,20 @@
         <div class="p-4 first-letter:uppercase space-y-4">
           <div>
             <p class="first-letter:uppercase">doctor</p>
-            <p class="capitalize font-medium">
+            <p class="capitalize text-slate-300 italic font-medium">
               {{ appointment.doctor?.profile?.name }}
               {{ appointment.doctor?.profile?.lastname }}
             </p>
           </div>
           <div>
             <p class="first-letter:uppercase">date</p>
-            <p class="capitalize font-medium">
+            <p class="capitalize text-slate-300 italic font-medium">
               {{ appointment.schedule?.available_date | date: 'fullDate' }}
             </p>
           </div>
           <div>
             <p class="first-letter:uppercase">heure</p>
-            <p class="capitalize font-medium">
+            <p class="capitalize text-slate-300 italic font-medium">
               {{ appointment.schedule?.start_time | date: 'shortTime' }}
             </p>
           </div>

@@ -1,6 +1,7 @@
 <div class="flex items-center justify-between p-4 bg-slate-800 text-white rounded-2xl">
   <div
-    class="cursor-pointer w-8 h-8  text-white  rounded-md flex items-center justify-center"
+    class="cursor-pointer w-8 h-8 text-white rounded-md flex items-center justify-center"
+    (click)="closeLeftBar()"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -19,7 +20,9 @@
   </div>
 
   <div class="flex items-center gap-2 cursor-pointer">
-    <div class="hidden md:flex h-8 w-60 rounded-2xl bg-slate-800/40 border border-gray-500 items-center gap-2 px-2 ">
+    <div
+      class="hidden md:flex h-8 w-60 rounded-2xl bg-slate-800/40 border border-gray-500 items-center gap-2 px-2"
+    >
       <div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -39,13 +42,7 @@
       <p>search...</p>
     </div>
 
-    <div
-       mat-raised-button
-        matBadge="5"
-        matBadgeColor="warn"
-        class="red-badge cursor-pointer"
-      
-    >
+    <div mat-raised-button matBadge="5" matBadgeColor="warn" class="red-badge cursor-pointer">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -62,10 +59,7 @@
       </svg>
     </div>
 
-    <div 
-      class="h-8 w-8 rounded-full bg-slate-900"
-      (click)="seletectedPannel('profile')"
-    >
+    <div class="h-8 w-8 rounded-full bg-slate-900" (click)="seletectedPannel('profile')">
       <img
         src="https://i.pinimg.com/1200x/3e/f3/50/3ef350dc86cc82a092463e5d795654b5.jpg"
         alt="profile"
