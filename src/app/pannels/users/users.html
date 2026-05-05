@@ -3,8 +3,13 @@
     <p class="text-3xl">les utilisateurs</p>
   </div>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-    @for (profile of allProfiles(); track profile.id) {
+    @if (isLoadingUsers()) {
+      <div *ngFor="let preloader of [0, 0, 0]">
+        <app-common-preloader />
+      </div>
+    } @else {
       <div
+        *ngFor="let profile of allProfiles()"
         class="relative md:h-100 h-auto border bg-slate-800 border-gray-500 rounded-2xl overflow-hidden snap-start"
       >
         <div class="w-full h-[45%]">

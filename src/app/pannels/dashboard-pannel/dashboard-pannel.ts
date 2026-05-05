@@ -1,9 +1,20 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit, signal } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard-pannel',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './dashboard-pannel.html',
   styleUrl: './dashboard-pannel.css',
 })
-export class DashboardPannel {}
+export class DashboardPannel implements OnInit {
+  constructor() {}
+
+  ngOnInit(): void {
+    this.getAllTheCount();
+  }
+
+  allNumbers = signal<any>({});
+
+  getAllTheCount() {}
+}

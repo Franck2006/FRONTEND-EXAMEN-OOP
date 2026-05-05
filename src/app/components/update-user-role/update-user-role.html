@@ -6,14 +6,14 @@
     (click)="$event.stopPropagation()"
     [formGroup]="roleData"
     (ngSubmit)="onChangeRole()"
-    class="border-gray- p-4 rounded-2xl bg-slate-900 relative w-[90vw] flex flex-col gap-4 md:w-100"
+    class="border-gray- p-4 rounded-2xl slider-from-down bg-slate-900 relative w-[90vw] flex flex-col gap-4 md:w-100"
   >
     <button
       type="button"
       class="absolute right-2 top-2 w-9 h-9 rounded-md"
       (click)="dismiss_model(false)"
     >
-      &times;
+      &times;slider-from-down
     </button>
     <div class="capitalize text-xl">editer le role</div>
     <div class="w-full">
