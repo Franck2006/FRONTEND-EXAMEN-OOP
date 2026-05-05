@@ -4,7 +4,9 @@
   class="snap-start"
   (ngSubmit)="onNewAppointmentSubmit()"
 >
-  <div class="border bg-slate-800 border-gray-500 rounded-2xl p-6 flex flex-col gap-4 text-white">
+  <div
+    class="border w-[90vw] md:w-auto bg-slate-800 border-gray-500 rounded-2xl p-6 flex flex-col gap-4 text-white"
+  >
     <div class="flex items-center gap-2 mb-2">
       <div class="bg-green-800/80 p-1 rounded-full">
         <svg
@@ -22,7 +24,7 @@
           />
         </svg>
       </div>
-      <h1 class="text-xl font-semibold">Ajouter une disponibilité</h1>
+      <h1 class="text-xl font-semibold first-letter:uppercase">modifiez la disponibilité</h1>
     </div>
 
     @if (choosen_patient()) {
@@ -38,9 +40,8 @@
                 class="text-md font-bold text-slate-400 h-full w-full flex items-center justify-center bg-slate-900"
               >
                 <p class="uppercase">
-                  <!-- Franck Amani
-                      {{ choosen_patient()?.name?.slice(0, 1) }}
-                      {{ choosen_patient()?.lastname?.slice(0, 1) }} -->
+                  {{ choosen_patient()?.profile?.name?.slice(0, 1) }}
+                  {{ choosen_patient()?.profile?.lastname?.slice(0, 1) }}
                 </p>
               </div>
             } @else {
@@ -53,14 +54,10 @@
           </div>
           <div>
             <p class="font-bold">
-              Franck Amani
-              <!-- {{ choosen_patient()?.name }}
-                  {{ choosen_patient()?.lastname }} -->
+              {{ choosen_patient()?.profile?.name }}
+              {{ choosen_patient()?.profile?.lastname }}
             </p>
-            <p class="italic text-slate-200">
-              number
-              <!-- {{ choosen_patient()?.phone }} -->
-            </p>
+            <p class="italic text-slate-200">{{ choosen_patient()?.profile?.phone }}</p>
           </div>
         </div>
       </div>

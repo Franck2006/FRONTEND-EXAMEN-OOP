@@ -31,14 +31,14 @@ export class UpdatingPatientSchedule implements OnInit {
     this.getPatientUpdateAppointmentdata();
   }
 
-  choosen_patient = signal<boolean>(false);
+  choosen_patient = signal<ModelAppInterfaces.Patient | null>(null);
   patientData = signal<ModelAppInterfaces.Patient | null>(null);
   scheduleData = signal<ModelAppInterfaces.Schedule | null>(null);
 
   getPatientUpdateAppointmentdata() {
     this.enablingModel.EnableUpdateUserAppointmentModel.subscribe({
       next: (updateParientAppointment) => {
-        this.patientData.set(updateParientAppointment.patient);
+        this.choosen_patient.set(updateParientAppointment.patient);
         this.scheduleData.set(updateParientAppointment.schedule);
 
         this.availabilityForm.patchValue({
@@ -76,11 +76,18 @@ export class UpdatingPatientSchedule implements OnInit {
       .subscribe({
         next: (data) => {
           this.isSubmittingNewAppoint.set(false);
+          this.showSnackMsgBar('the appointment was updated');
+          this.closePatientUpdateAppointmentdata();
         },
         error: () => {
           this.isSubmittingNewAppoint.set(false);
+          this.showSnackMsgBar('please check your network and try again pls');
         },
       });
+  }
+
+  closePatientUpdateAppointmentdata() {
+    this.enablingModel.setEnableUpdateUserAppointmentModel(false, null, null);
   }
 
   formatDate(date: string) {
@@ -95,5 +102,15 @@ export class UpdatingPatientSchedule implements OnInit {
     const minutes = String(date.getMinutes()).padStart(2, '0');
 
     return `${hours}:${minutes}`;
+  }
+
+  showSnackMsgBar(msg: string, action?: string) {
+    const snackBarRef = this.snackBar.open(msg, action, { duration: 3000 });
+    snackBarRef.afterDismissed().subscribe(() => {
+      console.log(' this is the atttt');
+    });
+    snackBarRef.onAction().subscribe(() => {
+      console.log(' this is the action');
+    });
   }
 }
