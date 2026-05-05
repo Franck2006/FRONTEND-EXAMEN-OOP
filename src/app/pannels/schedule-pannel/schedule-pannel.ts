@@ -189,8 +189,6 @@ export class SchedulePannel implements OnInit {
     this.enablingModel.EnableUpdateUserAppointmentModel.subscribe({
       next: (updateParientAppointment) => {
         this.isUpdatingAppointmentOpened.set(updateParientAppointment.status);
-        // console.log(updateParientAppointment.patient);
-        // console.log(updateParientAppointment.data);
       },
     });
   }

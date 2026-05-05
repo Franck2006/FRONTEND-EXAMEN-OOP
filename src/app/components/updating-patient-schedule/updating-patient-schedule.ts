@@ -32,7 +32,6 @@ export class UpdatingPatientSchedule implements OnInit {
   }
 
   choosen_patient = signal<boolean>(false);
-  submittingNewAppoint = signal<boolean>(false);
   patientData = signal<ModelAppInterfaces.Patient | null>(null);
   scheduleData = signal<ModelAppInterfaces.Schedule | null>(null);
 
@@ -53,26 +52,34 @@ export class UpdatingPatientSchedule implements OnInit {
     });
   }
 
+  isSubmittingNewAppoint = signal<boolean>(false);
   onNewAppointmentSubmit() {
-    const available_date = this.scheduleData()?.available_date;
-    const start_time = this.scheduleData()?.start_time;
-    const end_time = this.scheduleData()?.end_time;
+    this.isSubmittingNewAppoint.set(true);
+
+    const { available_date, start_time, end_time } = this.availabilityForm.value;
+
+    const available = new Date(available_date).toISOString();
+    const start = new Date(`${available_date}T${start_time}:00`).toISOString();
+    const end = new Date(`${available_date}T${end_time}:00`).toISOString();
+
     const id = this.scheduleData()?.id;
 
     this.scheduleService
       .updateSchedule(
         {
-          available_date,
-          start_time,
-          end_time,
+          available_date: available,
+          start_time: start,
+          end_time: end,
         },
         id,
       )
       .subscribe({
-        next: () => {
-          console.log('');
+        next: (data) => {
+          this.isSubmittingNewAppoint.set(false);
         },
-        error(err) {},
+        error: () => {
+          this.isSubmittingNewAppoint.set(false);
+        },
       });
   }
 
