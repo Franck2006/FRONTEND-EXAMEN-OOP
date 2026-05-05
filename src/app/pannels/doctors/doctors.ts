@@ -4,10 +4,11 @@ import { ProfileService } from '../../../services/profile.service';
 import { ModelAppInterfaces } from '../../../models/type.model';
 import { Message } from '../../components/message/message';
 import { EnablingModelHook } from '../../../hooks/enabling-models.hook';
+import { CommonPreloader } from '../../shared/common-preloader/common-preloader';
 
 @Component({
   selector: 'app-doctors',
-  imports: [CommonModule, Message],
+  imports: [CommonModule, Message, CommonPreloader],
   templateUrl: './doctors.html',
   styleUrl: './doctors.css',
 })
@@ -24,10 +25,16 @@ export class Doctors implements OnInit {
   }
 
   doctors = signal<ModelAppInterfaces.Profile[]>([]);
+  isLoadingDoctors = signal<boolean>(false);
   getAllDoctors() {
+    this.isLoadingDoctors.set(true);
     this.profile.getAllDoctors().subscribe({
       next: (doctors) => {
+        this.isLoadingDoctors.set(false);
         this.doctors.set(doctors);
+      },
+      error: () => {
+        this.isLoadingDoctors.set(false);
       },
     });
   }

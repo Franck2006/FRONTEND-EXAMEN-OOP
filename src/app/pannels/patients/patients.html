@@ -2,45 +2,52 @@
   <div class="snap-start capitalize">
     <p class="text-3xl">les patients</p>
   </div>
+
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-    <div
-      class="relative bg-slate-800 md:h-100 h-auto border border-gray-500 rounded-2xl overflow-hidden snap-start"
-      *ngFor="let patient of patients()"
-    >
-      <div class="w-full h-[45%]">
-        <img
-          src="https://i.pinimg.com/1200x/3e/f3/50/3ef350dc86cc82a092463e5d795654b5.jpg"
-          alt=""
-          class="w-full h-full"
-        />
+    @if (isLoadingPatients()) {
+      <div class="w-full" *ngFor="let preloader of [0, 0, 0]">
+        <app-common-preloader />
       </div>
-      <div class="p-4 first-letter:uppercase space-y-4">
-        <div>
-          <p class="first-letter:uppercase">patient</p>
-          <p class="capitalize text-slate-300 italic font-medium">
-            {{ patient.name }} {{ patient.lastname }}
-          </p>
+    } @else {
+      <div
+        class="relative bg-slate-800 md:h-100 h-auto border border-gray-500 rounded-2xl overflow-hidden snap-start"
+        *ngFor="let patient of patients()"
+      >
+        <div class="w-full h-[45%]">
+          <img
+            src="https://i.pinimg.com/1200x/3e/f3/50/3ef350dc86cc82a092463e5d795654b5.jpg"
+            alt=""
+            class="w-full h-full"
+          />
+        </div>
+        <div class="p-4 first-letter:uppercase space-y-4">
+          <div>
+            <p class="first-letter:uppercase">patient</p>
+            <p class="capitalize text-slate-300 italic font-medium">
+              {{ patient.name }} {{ patient.lastname }}
+            </p>
+          </div>
+          <div>
+            <p class="first-letter:uppercase">email</p>
+            <p class="capitalize text-slate-300 italic font-medium">
+              {{ patient.email }}
+            </p>
+          </div>
+          <div>
+            <p class="first-letter:uppercase">phone</p>
+            <p class="capitalize text-slate-300 italic font-medium">
+              {{ patient.phone }}
+            </p>
+          </div>
         </div>
         <div>
-          <p class="first-letter:uppercase">email</p>
-          <p class="capitalize text-slate-300 italic font-medium">
-            {{ patient.email }}
-          </p>
-        </div>
-        <div>
-          <p class="first-letter:uppercase">phone</p>
-          <p class="capitalize text-slate-300 italic font-medium">
-            {{ patient.phone }}
-          </p>
+          <button
+            class="absolute left-4 md:left-auto right-4 bottom-4 bg-blue-600 active:bg-blue-600 hover:bg-blue-700 transition-all rounded-full py-2 px-4"
+          >
+            voir patient detail
+          </button>
         </div>
       </div>
-      <div>
-        <button
-          class="absolute left-4 md:left-auto right-4 bottom-4 bg-blue-600 active:bg-blue-600 hover:bg-blue-700 transition-all rounded-full py-2 px-4"
-        >
-          voir patient detail
-        </button>
-      </div>
-    </div>
+    }
   </div>
 </div>
