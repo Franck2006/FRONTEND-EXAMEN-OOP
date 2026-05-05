@@ -48,8 +48,8 @@ export class Doctors implements OnInit {
 
   openMessageModel(status: boolean, doctor: ModelAppInterfaces.Doctor | null) {
     const profile_id = localStorage.getItem('id') || '';
-    const profile = this.profiles().filter((patient: ModelAppInterfaces.Profile) => {
-      return patient.id === profile_id;
+    const profile = this.profiles().filter((profile: ModelAppInterfaces.Profile) => {
+      return profile.id === profile_id;
     });
 
     const { patient } = profile[0];

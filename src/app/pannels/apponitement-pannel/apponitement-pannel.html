@@ -5,38 +5,44 @@
     <p class="text-3xl">mes rendez-vous</p>
   </div>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-    <div
-      class="relative md:h-100 bg-slate-800 h-auto border border-gray-500 rounded-2xl overflow-hidden snap-start"
-      *ngFor="let item of [7, 7, 7, 6, 5, 5, 4, 4, 6, 7]"
-    >
-      <div class="w-full h-[45%]">
-        <img
-          src="https://i.pinimg.com/1200x/3e/f3/50/3ef350dc86cc82a092463e5d795654b5.jpg"
-          alt=""
-          class="w-full h-full"
-        />
+    @if (isLoadingAppointment()) {
+      <div *ngFor="let prealoder of [0, 0, 0]">
+        <app-common-preloader />
       </div>
-      <div class="p-4 first-letter:uppercase space-y-4">
-        <div>
-          <p class="first-letter:uppercase">doctor</p>
-          <p class="capitalize font-medium">franck amani</p>
+    } @else {
+      <div
+        class="relative md:h-100 bg-slate-800 h-auto border border-gray-700 rounded-2xl overflow-hidden snap-start"
+        *ngFor="let appointment of allPatientsAppointment()"
+      >
+        <div class="w-full h-[45%]">
+          <img
+            src="https://i.pinimg.com/1200x/3e/f3/50/3ef350dc86cc82a092463e5d795654b5.jpg"
+            alt=""
+            class="w-full h-full"
+          />
         </div>
-        <div>
-          <p class="first-letter:uppercase">temps</p>
-          <p class="capitalize font-medium">franck amani</p>
-        </div>
-        <div>
-          <p class="first-letter:uppercase">heure</p>
-          <p class="capitalize font-medium">franck amani</p>
+        <div class="p-4 first-letter:uppercase space-y-4">
+          <div>
+            <p class="first-letter:uppercase">doctor</p>
+            <p class="capitalize font-medium">
+              {{ appointment.doctor?.profile?.name }}
+              {{ appointment.doctor?.profile?.lastname }}
+            </p>
+          </div>
+          <div>
+            <p class="first-letter:uppercase">date</p>
+            <p class="capitalize font-medium">
+              {{ appointment.schedule?.available_date | date: 'fullDate' }}
+            </p>
+          </div>
+          <div>
+            <p class="first-letter:uppercase">heure</p>
+            <p class="capitalize font-medium">
+              {{ appointment.schedule?.start_time | date: 'shortTime' }}
+            </p>
+          </div>
         </div>
       </div>
-      <div>
-        <button
-          class="absolute md:left-auto right-4 bottom-4 bg-blue-600 active:bg-blue-600 hover:bg-blue-700 transition-all rounded-full py-2 px-4"
-        >
-          voir docteur detailk
-        </button>
-      </div>
-    </div>
+    }
   </div>
 </div>

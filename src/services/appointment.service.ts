@@ -19,6 +19,12 @@ export class AppointementService {
     );
   }
 
+  getAllPatientAppointments(doctor_id: string | undefined) {
+    return this.http.get(
+      environment.API + `/appointement/get-all-patient-appointements/${doctor_id}`,
+    );
+  }
+
   getOneAppointement(id: string) {
     return this.http.get(environment.API + `/appointement/get-appointement/${id}`);
   }
