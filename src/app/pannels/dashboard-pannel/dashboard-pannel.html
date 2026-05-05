@@ -51,8 +51,16 @@
     <p class="uppercase text-[15px]">autre inforamtion</p>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-[1fr_400px] gap-4">
-    <div class="border border-gray-700 rounded-2xl bg-slate-800 p-4 row-span-2 snap-start"></div>
+  <div class="grid grid-cols-1 md:grid-cols-[1fr_400px] gap-4 snap-start">
+    <div class="border border-gray-700 rounded-2xl bg-slate-800 p-4 row-span-2 snap-start flex flex-col justify-center items-center w-full h-full min-h-64">
+      <canvas
+      baseChart
+      class="w-full h-full"
+      type="line"
+      [data]="lineChardData"
+      [options]="{ responsive: true, maintainAspectRatio: false }"
+      ></canvas>
+    </div>
     <div class="border space-y-4 text-lg border-gray-700 rounded-2xl bg-slate-800 p-4">
       <div>
         <p class="first-letter:uppercase">les activites recentes</p>
