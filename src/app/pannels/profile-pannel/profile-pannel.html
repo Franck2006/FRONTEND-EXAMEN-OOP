@@ -63,7 +63,7 @@
     </div>
     <div class="grid gap-4 grid-cols-1 md:grid-cols-2">
       @if (user_profile()) {
-        <div class="border bg-slate-800 border-gray-500 rounded-2xl p-4 row-span-2 space-y-6">
+        <div class="border bg-slate-800 border-gray-500 rounded-2xl p-4 md:row-span-2 space-y-6">
           <div class="flex gap-x-1">
             <div
               class="w-8 h-8 bg-green-300/10 text-green-500 flex items-center justify-center rounded-md"
@@ -87,13 +87,13 @@
               <p>info personnel</p>
             </div>
           </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <p class="capitalize">email address</p>
+              <p class="capitalize text-sm md:text-base">email address</p>
               <div
-                class="p-2 border border-gray-500 rounded-md flex items-center gap-x-2 text-slate-300"
+                class="p-2 border border-gray-500 rounded-md flex items-center gap-x-2 text-slate-300 text-sm md:text-base"
               >
-                <div>
+                <div class="flex-shrink-0">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -109,17 +109,17 @@
                     />
                   </svg>
                 </div>
-                <div>
+                <div class="truncate">
                   <p>{{ user_profile().email }}</p>
                 </div>
               </div>
             </div>
             <div>
-              <p class="capitalize">phone</p>
+              <p class="capitalize text-sm md:text-base">phone</p>
               <div
-                class="p-2 border border-gray-500 rounded-md flex items-center gap-x-2 text-slate-300"
+                class="p-2 border border-gray-500 rounded-md flex items-center gap-x-2 text-slate-300 text-sm md:text-base"
               >
-                <div>
+                <div class="flex-shrink-0">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -135,19 +135,17 @@
                     />
                   </svg>
                 </div>
-                <div>
-                  <p>
-                    {{ user_profile().phone }}
-                  </p>
+                <div class="truncate">
+                  <p>{{ user_profile().phone }}</p>
                 </div>
               </div>
             </div>
             <div>
-              <p class="capitalize">role</p>
+              <p class="capitalize text-sm md:text-base">role</p>
               <div
-                class="p-2 border border-gray-500 rounded-md flex items-center gap-x-2 text-slate-300"
+                class="p-2 border border-gray-500 rounded-md flex items-center gap-x-2 text-slate-300 text-sm md:text-base"
               >
-                <div>
+                <div class="flex-shrink-0">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -169,11 +167,11 @@
               </div>
             </div>
             <div>
-              <p class="capitalize">nombre de licences</p>
+              <p class="capitalize text-sm md:text-base">nombre de licences</p>
               <div
-                class="p-2 border border-gray-500 rounded-md flex items-center gap-x-2 text-slate-300"
+                class="p-2 border border-gray-500 rounded-md flex items-center gap-x-2 text-slate-300 text-sm md:text-base"
               >
-                <div>
+                <div class="flex-shrink-0">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -194,12 +192,12 @@
                 </div>
               </div>
             </div>
-            <div class="col-span-2">
-              <p class="capitalize">description</p>
+            <div class="col-span-1 sm:col-span-2">
+              <p class="capitalize text-sm md:text-base">description</p>
               <div
-                class="p-2 border border-gray-500 rounded-md flex items-center gap-x-2 text-slate-300"
+                class="p-2 border border-gray-500 rounded-md flex items-center gap-x-2 text-slate-300 text-sm md:text-base"
               >
-                <p>user description</p>
+                <p class="truncate">user description</p>
               </div>
             </div>
           </div>

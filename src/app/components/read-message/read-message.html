@@ -14,19 +14,12 @@
           </p>
         </div>
         <div>
-          <p class="text-xl">{{ patientMessage()?.profile?.name?.slice(0, 1) }}</p>
+          <p class="text-xl">{{ patientMessage()?.profile?.name }}</p>
           <p class="italic text-slate-300">
-            {{ patientMessage()?.profile?.lastname?.slice(0, 1) }}
+            {{ patientMessage()?.profile?.lastname }}
           </p>
         </div>
       </div>
-
-      <!-- <div class="rounded-2xl bg-slate-900 p-4 flex gap-4">
-        <p>n <sup>o</sup> message</p>
-        <p class="first-letter:uppercase text-slate-300 italic">
-          {{ patientMessage()?.profile?.patient?.profile }}
-        </p>
-      </div> -->
 
       <div class="rounded-2xl bg-slate-900 p-4">
         <p>message</p>
@@ -34,13 +27,6 @@
           {{ patientMessage()?.message }}
         </p>
       </div>
-
-      <!-- <div class="rounded-2xl bg-slate-900 p-4">
-        <p>specialite</p>
-        <p class="first-letter:uppercase text-slate-300 italic">
-          {{ patientMessage()?.doctor?.specialty }}
-        </p>
-      </div> -->
     </div>
   </div>
 </div>

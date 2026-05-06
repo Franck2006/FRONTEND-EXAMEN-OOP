@@ -5,70 +5,32 @@
     <p class="text-3xl uppercase font-semebold">dashboard</p>
   </div>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full snap-start">
-    <div
-      *ngFor="
-        let number of [
-          { name: 'user', number: 3 },
-          { name: 'admin', number: 1 },
-          { name: 'patients', number: 5 },
-          { name: 'doctors', number: 0 },
-        ]
-      "
-      class="border border-gray-700 rounded-2xl bg-slate-800 p-4"
-    >
-      <div class="flex gap-1">
-        <div
-          class="w-10 h-10 rounded-full bg-green-300/30 text-green-400 border border-gray-500 flex items-center justify-center"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="size-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5"
-            />
-          </svg>
+    @if (isLoadingUserWithRole()) {
+      <div
+        *ngFor="let i of [1, 2, 3, 4]"
+        class="border border-gray-700 rounded-2xl bg-slate-800 p-4 animate-pulse"
+      >
+        <div class="flex gap-1 items-center">
+          <!-- Circle Icon Placeholder -->
+          <div class="w-10 h-10 rounded-full bg-slate-700"></div>
+
+          <!-- Label Placeholder -->
+          <div class="h-6 w-24 bg-slate-700 rounded-md"></div>
         </div>
-        <div class="font-medium capitalize text-2xl">
-          <p>{{ number.name }}</p>
+
+        <!-- Big Number Placeholder -->
+        <div class="mt-4 flex justify-end">
+          <div class="h-10 w-12 bg-slate-700 rounded-md"></div>
         </div>
       </div>
-      <div>
-        <p class="font-bold text-4xl text-end text-gray-300">
-          {{ number.number }}
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <div class="snap-start">
-    <p class="uppercase text-[15px]">autre inforamtion</p>
-  </div>
-
-  <div class="grid grid-cols-1 md:grid-cols-[1fr_400px] gap-4 snap-start">
-    <div class="border border-gray-700 rounded-2xl bg-slate-800 p-4 row-span-2 snap-start flex flex-col justify-center items-center w-full h-full min-h-64">
-      <canvas
-      baseChart
-      class="w-full h-full"
-      type="line"
-      [data]="lineChardData"
-      [options]="{ responsive: true, maintainAspectRatio: false }"
-      ></canvas>
-    </div>
-    <div class="border space-y-4 text-lg border-gray-700 rounded-2xl bg-slate-800 p-4">
-      <div>
-        <p class="first-letter:uppercase">les activites recentes</p>
-      </div>
-      <div class="space-y-2">
-        <div *ngFor="let recentActivity of [0, 0, 0]" class="flex gap-2 items-center">
+    } @else {
+      <div
+        *ngFor="let userRole of allUserWithRoles()"
+        class="border border-gray-700 rounded-2xl bg-slate-800 p-4"
+      >
+        <div class="flex gap-1">
           <div
-            class="w-11 h-11 rounded-full bg-green-300/30 text-green-400 border border-gray-500 flex items-center justify-center"
+            class="w-10 h-10 rounded-full bg-green-300/30 text-green-400 border border-gray-500 flex items-center justify-center"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -85,13 +47,85 @@
               />
             </svg>
           </div>
-          <div>
-            <p class="first-letter:capitalize">this is the recent activity</p>
-            <p class="first-letter:capitalize text-slate-300 text-[15px] italic">
-              this is the recent activity
-            </p>
+          <div class="font-medium first-letter:uppercase lowercase text-2xl">
+            <p>{{ userRole.role.replace('_', ' ') }}</p>
           </div>
         </div>
+        <div>
+          <p class="font-bold text-4xl text-end text-gray-300">
+            {{ userRole._count.role }}
+          </p>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="snap-start">
+    <p class="uppercase text-[15px]">autre inforamtion</p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-[1fr_400px] gap-4 snap-start">
+    <div
+      class="border border-gray-700 rounded-2xl bg-slate-800 p-4 row-span-2 snap-start flex flex-col justify-center items-center w-full h-full min-h-64"
+    >
+      <canvas
+        baseChart
+        class="w-full h-full"
+        type="line"
+        [data]="lineChardData"
+        [options]="{ responsive: true, maintainAspectRatio: false }"
+      ></canvas>
+    </div>
+    <div class="border space-y-4 text-lg border-gray-700 rounded-2xl bg-slate-800 p-4">
+      <div>
+        <p class="first-letter:uppercase">les activites recentes</p>
+      </div>
+      <div class="space-y-2">
+        @if (isLoadingSomeUser()) {
+          <div class="flex flex-col gap-4 w-full animate-pulse">
+            <!-- Repeat for as many items as you want to show during loading -->
+            <div *ngFor="let i of [1, 2, 3]" class="flex gap-2 items-center">
+              <!-- Circle Avatar Placeholder -->
+              <div class="w-11 h-11 rounded-full bg-slate-700 border border-gray-600"></div>
+
+              <!-- Text Lines Placeholder -->
+              <div class="flex-1 space-y-2">
+                <!-- Top Line (Title) -->
+                <div class="h-4 bg-slate-700 rounded w-3/4"></div>
+
+                <!-- Bottom Line (Subtitle/Italic text) -->
+                <div class="h-3 bg-slate-800 rounded w-1/2"></div>
+              </div>
+            </div>
+          </div>
+        } @else {
+          <div *ngFor="let recentActivity of [0, 0, 0]" class="flex gap-2 items-center">
+            <div
+              class="w-11 h-11 rounded-full bg-green-300/30 text-green-400 border border-gray-500 flex items-center justify-center"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5"
+                />
+              </svg>
+            </div>
+            <div>
+              <p class="first-letter:capitalize">this is the recent activity</p>
+              <p class="first-letter:capitalize text-slate-300 text-[15px] italic">
+                this is the recent activity
+              </p>
+            </div>
+          </div>
+        }
       </div>
     </div>
     <div class="border border-gray-700 rounded-2xl bg-slate-800 space-y-4 p-4">

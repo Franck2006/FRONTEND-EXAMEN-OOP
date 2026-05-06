@@ -30,6 +30,7 @@ export namespace ModelAppInterfaces {
   export interface Patient extends ID, CreatedTime {
     profile_id: string;
     profile?: Profile;
+    message?: Message;
   }
 
   export interface Doctor extends Patient {
@@ -96,5 +97,14 @@ export namespace ModelHardCodedValues {
 
   export interface ReadMessagesModel extends DataModel {
     message: ModelAppInterfaces.Patient | null;
+  }
+
+  export interface UsRootersWithRolesModel {
+    _count: Count;
+    role: string;
+  }
+
+  export interface Count {
+    role: number;
   }
 }

@@ -19,7 +19,7 @@ export class ReadMessage implements OnInit {
     this.enablingModel.setReadMessagesModel(status, null);
   }
 
-  patientMessage = signal<ModelAppInterfaces.Patient | null | any>(null);
+  patientMessage = signal<ModelAppInterfaces.Patient | null>(null);
   getReadMessageData() {
     this.enablingModel.ReadMessagesModel.subscribe({
       next: ({ message }) => {

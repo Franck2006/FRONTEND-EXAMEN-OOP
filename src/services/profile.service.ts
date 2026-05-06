@@ -27,6 +27,10 @@ export class ProfileService {
     );
   }
 
+  getUsersBasedOnRole() {
+    return this.http.get(environment.API + '/profile/get-users-based-on-role');
+  }
+
   deleteProfile(id: string) {
     return this.http.delete<ModelAppInterfaces.Profile>(
       environment.API + `/profile/delete-profile/${id}`,
