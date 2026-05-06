@@ -26,7 +26,9 @@ export class Message implements OnInit {
     this.getMessageModelStatus();
   }
 
+  isLoadingMessage = signal<boolean>(false);
   sendMessageDoctor(doctor_id: string) {
+    this.isLoadingMessage.set(true);
     const { message }: ModelAppInterfaces.Message = this.message.value;
     const patient_id = this.modelStatusDataStorePatient().id;
 
@@ -34,9 +36,12 @@ export class Message implements OnInit {
       next: (message) => {
         console.log('message sent');
         console.log(message);
+        this.isLoadingMessage.set(true);
+        this.dismissMessageModel(false);
       },
       error: (err) => {
         console.log(err);
+        this.isLoadingMessage.set(true);
       },
     });
   }
@@ -50,8 +55,8 @@ export class Message implements OnInit {
         this.modelStatusDataStoreDoctor.set(data);
         this.modelStatusDataStorePatient.set(patient);
 
-        console.log(data);
-        console.log(patient?.id);
+        // console.log(data);
+        // console.log(patient?.id);
       },
       error: (e) => {
         console.log(e);

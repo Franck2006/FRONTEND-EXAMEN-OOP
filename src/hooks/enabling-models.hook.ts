@@ -62,4 +62,13 @@ export class EnablingModelHook {
   setLeftBarModel(status: boolean) {
     this.subjectLeftBarModel.next(status);
   }
+
+  private subjectReadMessagesModel = new BehaviorSubject<ModelHardCodedValues.ReadMessagesModel>({
+    status: false,
+    message: null,
+  });
+  ReadMessagesModel = this.subjectReadMessagesModel.asObservable();
+  setReadMessagesModel(status: boolean, message: ModelAppInterfaces.Patient | null) {
+    this.subjectReadMessagesModel.next({ status, message });
+  }
 }

@@ -26,6 +26,8 @@ export class Doctors implements OnInit {
     this.getDoctorModelData();
   }
 
+  role = signal<string>(localStorage.getItem('role') || '');
+
   doctors = signal<ModelAppInterfaces.Profile[]>([]);
   isLoadingDoctors = signal<boolean>(false);
   getAllDoctors() {

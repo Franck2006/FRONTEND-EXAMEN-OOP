@@ -93,4 +93,8 @@ export namespace ModelHardCodedValues {
   export interface DoctorDetailsModel extends DataModel {
     doctor: ModelAppInterfaces.Profile | null;
   }
+
+  export interface ReadMessagesModel extends DataModel {
+    message: ModelAppInterfaces.Patient | null;
+  }
 }

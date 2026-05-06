@@ -11,10 +11,17 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { UpdatingPatientSchedule } from '../../components/updating-patient-schedule/updating-patient-schedule';
 import { EnablingModelHook } from '../../../hooks/enabling-models.hook';
+import { ReadMessage } from '../../components/read-message/read-message';
 
 @Component({
   selector: 'app-schedule-pannel',
-  imports: [CommonModule, ReactiveFormsModule, MatProgressSpinnerModule, UpdatingPatientSchedule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatProgressSpinnerModule,
+    UpdatingPatientSchedule,
+    ReadMessage,
+  ],
   templateUrl: './schedule-pannel.html',
   styleUrl: './schedule-pannel.css',
 })
@@ -43,6 +50,7 @@ export class SchedulePannel implements OnInit {
     this.getAllPatientMessages();
     this.getAllDoctorAppointments();
     this.getPatientUpdateAppointmentdata();
+    this.getReadMessageData();
   }
 
   public isInvalid(controlName: string): boolean {
@@ -81,6 +89,23 @@ export class SchedulePannel implements OnInit {
         this.isGettingPatientsUserRequests.set(false);
         console.log(' someting went wrong ');
         this.showSnackMsgBar('check your network', 'ok');
+      },
+    });
+  }
+
+  setReadMessage(message: ModelAppInterfaces.Patient | null) {
+    this.enablingModel.setReadMessagesModel(true, message);
+  }
+
+  isMessageBoxOpen = signal<boolean>(false);
+  getReadMessageData() {
+    this.enablingModel.ReadMessagesModel.subscribe({
+      next: (message: any) => {
+        this.enablingModel.ReadMessagesModel.subscribe({
+          next: ({ status }) => {
+            this.isMessageBoxOpen.set(status);
+          },
+        });
       },
     });
   }
