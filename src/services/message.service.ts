@@ -30,7 +30,7 @@ export class MessageService {
     return this.http.get(environment.API + `/message/get-for-doctor/${id}`);
   }
 
-  messageRealTimeData = new BehaviorSubject<any>([]);
+  $messageRealTimeData = new BehaviorSubject<any>([]);
   getOneMessageForDoctorRealTime() {
     this.refreshRealTimeData();
   }
