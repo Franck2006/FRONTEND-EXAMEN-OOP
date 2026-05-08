@@ -36,12 +36,12 @@ export class Message implements OnInit {
       next: (message) => {
         console.log('message sent');
         console.log(message);
-        this.isLoadingMessage.set(true);
+        this.isLoadingMessage.set(false);
         this.dismissMessageModel(false);
       },
       error: (err) => {
         console.log(err);
-        this.isLoadingMessage.set(true);
+        this.isLoadingMessage.set(false);
       },
     });
   }
